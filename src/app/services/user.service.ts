@@ -33,5 +33,14 @@ export class UserService {
         return res.json();
       })
   }
+  existeUsuarioConEmail(email:string):Observable<any>{
+    let body=JSON.stringify({email:email});
+    var headers=new Headers({'Content-Type':'application/json'});
+    
+    return this.http.post(this.url+"/user/exist",body,{headers})
+      .map(res=>{
+        return res.json();
+      })
+  }
 
 }

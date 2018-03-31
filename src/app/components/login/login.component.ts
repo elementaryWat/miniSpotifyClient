@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
       'password': new FormControl('', Validators.required),
       'email': new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")])
     });
+    this.formLogin.controls['email'].setAsyncValidators(this.existeUsuario.bind(this))
   }
   crearFormRegistro() {
     this.user=new User('','','','','USER','default.png');
@@ -43,11 +44,12 @@ export class LoginComponent implements OnInit {
     this.formRegistro.controls['confirmPassword'].setValidators([Validators.required, this.noIgual.bind(this.formRegistro)]);
   }
   login() {
-    this.userService.signIn(this.formLogin.value,true)
+    /* this.userService.signIn(this.formLogin.value,true)
     .subscribe(data=>{
       console.log(data);
       this.formLogin.reset();
-    })
+    }) */
+    console.log(this.formLogin)
   }
   register() {
     this.user.name=this.formRegistro.value.name;
@@ -64,6 +66,18 @@ export class LoginComponent implements OnInit {
     if (control.value !== formRegistro.controls['password'].value) {
       return { noIgual: true }
     }
+  }
+  existeUsuario(control:FormControl){
+    let promiseUser=new Promise((resolve,reject)=>{
+      this.userService.existeUsuarioConEmail(control.value).subscribe(data=>{
+        if(data.founded){
+          resolve({existeUsuario:true})
+        }else{
+          resolve(null);
+        }
+      })
+    })
+    return promiseUser;
   }
   ngOnInit() {
 
