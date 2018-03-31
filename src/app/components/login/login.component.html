@@ -1,0 +1,99 @@
+<div class="container main-container">
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Login Usuario</h3>
+      <form [formGroup]="formLogin" (ngSubmit)="login()">
+        <div class="form-group">
+          <label for="userEmailL">Correo electronico</label>
+          <input type="email" [ngClass]="{'is-valid': formLogin.controls['email'].valid && formLogin.controls['email'].touched
+              , 'is-invalid':formLogin.controls['email'].invalid && formLogin.controls['email'].touched}" class="form-control invalid"
+            formControlName="email" id="userEmailL" placeholder="alguien@example.com">
+          <div class="invalid-feedback" *ngIf="formLogin.controls['email'].errors?.pattern">
+            Formato de correo no valido
+          </div>
+          <div class="invalid-feedback" *ngIf="formLogin.controls['email'].errors?.required">
+            Debe ingresar su email
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="userPasswordL">Contraseña</label>
+          <input type="password" [ngClass]="{'is-valid': formLogin.controls['password'].valid && formLogin.controls['password'].touched
+              , 'is-invalid':formLogin.controls['password'].invalid && formLogin.controls['password'].touched}" class="form-control"
+            formControlName="password" id="userPasswordL" placeholder="******">
+          <div class="invalid-feedback" *ngIf="formLogin.controls['password'].errors?.required">
+            Debe ingresar la contraseña
+          </div>
+        </div>
+        <!-- TODO: This is for server side, there is another version for browser defaults -->
+        <button type="submit" class="btn btn-outline-primary" [disabled]="formLogin.invalid">Ingresar</button>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <h3>Registro Usuario</h3>
+      <form [formGroup]="formRegistro" (ngSubmit)="register()">
+        <div class="form-group">
+          <label for="userName">Nombre</label>
+          <input type="email" [ngClass]="{'is-valid': formRegistro.controls['name'].valid && formRegistro.controls['name'].touched
+                    , 'is-invalid':formRegistro.controls['name'].invalid && formRegistro.controls['name'].touched}" class="form-control invalid"
+            formControlName="name" id="userName">
+          <div class="invalid-feedback" *ngIf="formRegistro.controls['name'].errors?.required">
+            Debe ingresar su nombre
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="userName">Apellido</label>
+            <input type="email" [ngClass]="{'is-valid': formRegistro.controls['surname'].valid && formRegistro.controls['surname'].touched
+                      , 'is-invalid':formRegistro.controls['surname'].invalid && formRegistro.controls['surname'].touched}" class="form-control invalid"
+              formControlName="surname" id="userSurname">
+            <div class="invalid-feedback" *ngIf="formRegistro.controls['surname'].errors?.required">
+              Debe ingresar su apellido
+            </div>
+          </div>
+        <div class="form-group">
+          <label for="userEmailR">Correo electronico</label>
+          <input type="email" [ngClass]="{'is-valid': formRegistro.controls['email'].valid && formRegistro.controls['email'].touched
+                , 'is-invalid':formRegistro.controls['email'].invalid && formRegistro.controls['email'].touched}" class="form-control invalid"
+            formControlName="email" id="userEmailR" placeholder="alguien@example.com">
+          <div class="invalid-feedback" *ngIf="formRegistro.controls['email'].errors?.pattern">
+            Formato de correo no valido
+          </div>
+          <div class="invalid-feedback" *ngIf="formRegistro.controls['email'].errors?.required">
+            Debe ingresar su email
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="userPasswordR">Contraseña</label>
+          <input type="password" [ngClass]="{'is-valid': formRegistro.controls['password'].valid && formRegistro.controls['password'].touched
+                , 'is-invalid':formRegistro.controls['password'].invalid && formRegistro.controls['password'].touched}" class="form-control"
+            formControlName="password" id="userPasswordR" placeholder="******">
+          <div class="invalid-feedback" *ngIf="formRegistro.controls['password'].errors?.pattern">
+            <p>Formato de contraseña no valido</p>
+            <p>Su contraseña debe tener un minimo de 8 caracteres incluyendo:</p>
+            <ul>
+              <li>Minisculas y mayusculas</li>
+              <li>1 o mas numeros</li>
+              <li>1 o mas caracteres especiales</li>
+            </ul>
+          </div>
+          <div class="invalid-feedback" *ngIf="formRegistro.controls['password'].errors?.required">
+            Debe ingresar la contraseña
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="userConfirmPasswordR">Repetir contraseña</label>
+            <input type="password" [ngClass]="{'is-valid': formRegistro.controls['confirmPassword'].valid && formRegistro.controls['confirmPassword'].touched
+                  , 'is-invalid':formRegistro.controls['confirmPassword'].invalid && formRegistro.controls['confirmPassword'].touched}" class="form-control"
+              formControlName="confirmPassword" id="userConfirmPasswordR" placeholder="******">
+            <div class="invalid-feedback" *ngIf="formRegistro.controls['confirmPassword'].errors?.noIgual && !formRegistro.controls['confirmPassword'].errors?.required">
+              Las contraseñas no coinciden
+            </div>
+            <div class="invalid-feedback" *ngIf="formRegistro.controls['confirmPassword'].errors?.required">
+              Debe repetir la contraseña
+            </div>
+          </div>
+        <!-- TODO: This is for server side, there is another version for browser defaults -->
+        <button type="submit" class="btn btn-outline-primary" [disabled]="formRegistro.invalid">Ingresar</button>
+      </form>
+    </div>
+  </div>
+</div>
