@@ -14,9 +14,6 @@
           <div class="invalid-feedback" *ngIf="formLogin.controls['email'].errors?.required">
             Debe ingresar su email
           </div>
-          <div class="invalid-feedback" *ngIf="formLogin.controls['email'].errors?.existeUsuario">
-              Ya existe un usuario con este email
-          </div>
         </div>
         <div class="form-group">
           <label for="userPasswordL">Contraseña</label>
@@ -62,6 +59,9 @@
           </div>
           <div class="invalid-feedback" *ngIf="formRegistro.controls['email'].errors?.required">
             Debe ingresar su email
+          </div>
+          <div class="invalid-feedback" *ngIf="formRegistro.controls['email'].errors?.existeUsuario">
+              Ya existe un usuario con este email
           </div>
         </div>
         <div class="form-group">

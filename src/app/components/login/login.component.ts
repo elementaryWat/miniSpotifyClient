@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
       'password': new FormControl('', Validators.required),
       'email': new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")])
     });
-    this.formLogin.controls['email'].setAsyncValidators(this.existeUsuario.bind(this))
   }
   crearFormRegistro() {
     this.user=new User('','','','','USER','default.png');
@@ -41,15 +40,15 @@ export class LoginComponent implements OnInit {
       'password': new FormControl('', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)]),
       'confirmPassword': new FormControl('')
     });
+    this.formRegistro.controls['email'].setAsyncValidators(this.existeUsuario.bind(this))    
     this.formRegistro.controls['confirmPassword'].setValidators([Validators.required, this.noIgual.bind(this.formRegistro)]);
   }
   login() {
-    /* this.userService.signIn(this.formLogin.value,true)
+    this.userService.signIn(this.formLogin.value,true)
     .subscribe(data=>{
       console.log(data);
       this.formLogin.reset();
-    }) */
-    console.log(this.formLogin)
+    })
   }
   register() {
     this.user.name=this.formRegistro.value.name;
