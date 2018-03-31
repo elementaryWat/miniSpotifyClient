@@ -43,7 +43,11 @@ export class LoginComponent implements OnInit {
     this.formRegistro.controls['confirmPassword'].setValidators([Validators.required, this.noIgual.bind(this.formRegistro)]);
   }
   login() {
-    console.log(this.formLogin.value)
+    this.userService.signIn(this.formLogin.value,true)
+    .subscribe(data=>{
+      console.log(data);
+      this.formLogin.reset();
+    })
   }
   register() {
     this.user.name=this.formRegistro.value.name;

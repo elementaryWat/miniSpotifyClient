@@ -22,5 +22,16 @@ export class UserService {
         return res.json();
       })
   }
+  signIn(userToLogin,gethash=null){
+    if(gethash){
+      userToLogin.gethash=gethash;
+    }
+    var body=JSON.stringify(userToLogin);
+    var headers=new Headers({'Content-Type':'application/json'});
+    return this.http.post(this.url + "/user/login",body,{headers})
+      .map(res => {
+        return res.json();
+      })
+  }
 
 }
