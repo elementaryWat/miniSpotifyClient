@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
+
 
 
 @Component({
@@ -10,7 +13,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   formLogin: FormGroup;
   formRegistro: FormGroup;
-  constructor() {
+  user:User;
+  constructor(private userService:UserService) {
     this.crearFormLogin();
     this.crearFormRegistro();
   }
@@ -22,6 +26,7 @@ export class LoginComponent implements OnInit {
     });
   }
   crearFormRegistro() {
+    this.user=new User('','','','','USER','default.png');
     /* /^
       (?=.*\d)          // should contain at least one digit
       (?=.*[a-z])       // should contain at least one lower case
@@ -32,10 +37,8 @@ export class LoginComponent implements OnInit {
       'name': new FormControl('', Validators.required),
       'surname': new FormControl('', Validators.required),
       'email': new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]),
-      'password': new FormControl('', [, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)]),
-      'confirmPassword': new FormControl(''),
-      'role':new FormControl('USER'),
-      'image':new FormControl('default.png')
+      'password': new FormControl('', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)]),
+      'confirmPassword': new FormControl('')
     });
     this.formRegistro.controls['confirmPassword'].setValidators([Validators.required, this.noIgual.bind(this.formRegistro)]);
   }
@@ -43,7 +46,14 @@ export class LoginComponent implements OnInit {
     console.log(this.formLogin.value)
   }
   register() {
-    console.log(this.formRegistro.value);
+    this.user.name=this.formRegistro.value.name;
+    this.user.surname=this.formRegistro.value.surname;
+    this.user.email=this.formRegistro.value.email;
+    this.user.password=this.formRegistro.value.password;
+    this.userService.register(this.user).subscribe(data=>{
+      console.log(data);
+      this.formRegistro.reset();
+    });
   }
   noIgual(control: FormControl) {
     let formRegistro: any = this;
