@@ -17,15 +17,9 @@ export class LoginComponent implements OnInit {
   user:User;
   hayErrorLogin:boolean=false;
   errorMsg:string;
-  constructor(private userService:UserService,
-              private router:Router) {
+  constructor(private userService:UserService) {
     this.crearFormLogin();
     this.crearFormRegistro();
-    userService.isLogged().subscribe(isLogged=>{
-      if(isLogged){
-        router.navigate(['/home']);
-      }
-    });
   }
 
   crearFormLogin() {

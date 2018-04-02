@@ -14,6 +14,8 @@ export class AppComponent {
     userService.isLogged().subscribe(isLogged=>{
       if(!isLogged){
         router.navigate(['/login']);
+      }else{
+        router.navigate(['/home']);        
       }
     })
   }
