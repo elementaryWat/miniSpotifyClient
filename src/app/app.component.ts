@@ -9,9 +9,11 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent {
   title = 'MEANSIFY';
+  logged:boolean;
   constructor(private router:Router,
     private userService:UserService){
     userService.isLogged().subscribe(isLogged=>{
+      this.logged=isLogged;
       if(!isLogged){
         router.navigate(['/login']);
       }else{

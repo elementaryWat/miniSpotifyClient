@@ -1,3 +1,10 @@
-<router-outlet>
-</router-outlet>
-
+<div class="row" [ngStyle]="{'height': '100%'}">
+    <div class="col-md-2 navigation" *ngIf="logged">
+        <app-nav-bar>
+        </app-nav-bar>
+    </div>
+    <div [ngClass]="{'col-md-10': logged,'col-md-12':!logged}">
+        <router-outlet>
+        </router-outlet>
+    </div>
+</div>

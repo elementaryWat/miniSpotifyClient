@@ -1,10 +1,10 @@
 <div class="container main-container">
   <div class="row">
     <div class="col-md-6">
-      <div class="alert alert-danger" role="alert" *ngIf="hayErrorLogin">
-        {{errorMsg}}
-      </div>
       <h3>Login Usuario</h3>
+      <div class="alert alert-danger" role="alert" *ngIf="hayErrorLogin">
+          {{errorMsgL}}
+        </div>
       <form [formGroup]="formLogin" (ngSubmit)="login()">
         <div class="form-group">
           <label for="userEmailL">Correo electronico</label>
@@ -33,6 +33,12 @@
     </div>
     <div class="col-md-6">
       <h3>Registro Usuario</h3>
+      <div class="alert alert-success" role="alert" *ngIf="registroExitoso">
+        Se ha registrado con exito. Inicie sesion para comenzar a disfrutar la mejor musica
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="hayErrorRegistro">
+          {{errorMsgR}}
+        </div>
       <form [formGroup]="formRegistro" (ngSubmit)="register()">
         <div class="form-group">
           <label for="userName">Nombre</label>

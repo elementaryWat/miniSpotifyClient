@@ -16,7 +16,10 @@ export class LoginComponent implements OnInit {
   formRegistro: FormGroup;
   user:User;
   hayErrorLogin:boolean=false;
-  errorMsg:string;
+  errorMsgL:string;
+  hayErrorRegistro:boolean=false;
+  registroExitoso:boolean=false;
+  errorMsgR:string;
   constructor(private userService:UserService) {
     this.crearFormLogin();
     this.crearFormRegistro();
@@ -48,6 +51,9 @@ export class LoginComponent implements OnInit {
     });
     this.formRegistro.controls['email'].setAsyncValidators(this.existeUsuario.bind(this))    
     this.formRegistro.controls['confirmPassword'].setValidators([Validators.required, this.noIgual.bind(this.formRegistro)]);
+    this.formRegistro.valueChanges.subscribe(currentValueR=>{
+      this.registroExitoso=false;
+    })
   }
   login() {
     this.userService.signIn(this.formLogin.value,true)
@@ -60,11 +66,11 @@ export class LoginComponent implements OnInit {
         this.userService.estadoLogged.next(true);
       }else{
         this.hayErrorLogin=true;
-        this.errorMsg="Credenciales de acceso no validas";
+        this.errorMsgL="Credenciales de acceso no validas";
       }
     },error=>{
       this.hayErrorLogin=true;
-      this.errorMsg=JSON.parse(error._body).message;
+      this.errorMsgL=JSON.parse(error._body).message;
     })
   }
   register() {
@@ -75,6 +81,10 @@ export class LoginComponent implements OnInit {
     this.userService.register(this.user).subscribe(data=>{
       //console.log(data);
       this.formRegistro.reset();
+      this.registroExitoso=true;
+    },error=>{
+      this.hayErrorRegistro=true;
+      this.errorMsgR=JSON.parse(error._body).message;
     });
   }
   noIgual(control: FormControl) {

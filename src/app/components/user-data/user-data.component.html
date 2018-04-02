@@ -1,0 +1,39 @@
+<div class="container">
+    <h3>Datos {{userService.currentUser.name}} {{userService.currentUser.surname}}</h3>
+    <form [formGroup]="formUserData" (ngSubmit)="updateUserData()">
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input type="text" [ngClass]="{'is-valid': formUserData.controls['name'].valid && formUserData.controls['name'].touched
+                , 'is-invalid':formUserData.controls['name'].invalid && formUserData.controls['name'].touched}" class="form-control invalid"
+          formControlName="name" id="name">
+        <div class="invalid-feedback" *ngIf="formUserData.controls['name'].errors?.required">
+          Debe ingresar su nombre
+        </div>
+      </div>
+      <div class="form-group">
+          <label for="surname">Apellido</label>
+          <input type="text" [ngClass]="{'is-valid': formUserData.controls['surname'].valid && formUserData.controls['surname'].touched
+                  , 'is-invalid':formUserData.controls['surname'].invalid && formUserData.controls['surname'].touched}" class="form-control invalid"
+            formControlName="surname" id="surname">
+          <div class="invalid-feedback" *ngIf="formUserData.controls['surname'].errors?.required">
+            Debe ingresar su apellido
+          </div>
+        </div>
+      <div class="form-group">
+        <label for="email">Correo electronico</label>
+        <input type="email" [ngClass]="{'is-valid': formUserData.controls['email'].valid && formUserData.controls['email'].touched
+            , 'is-invalid':formUserData.controls['email'].invalid && formUserData.controls['email'].touched}" class="form-control invalid"
+          formControlName="email" id="email" placeholder="alguien@example.com">
+        <div class="invalid-feedback" *ngIf="formUserData.controls['email'].errors?.pattern">
+          Formato de correo no valido
+        </div>
+        <div class="invalid-feedback" *ngIf="formUserData.controls['email'].errors?.required">
+          Debe ingresar su email
+        </div>
+      </div>
+      <div class="btn-form">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="formUserData.invalid">Ingresar</button>    
+      </div>
+      <!-- TODO: This is for server side, there is another version for browser defaults -->
+    </form>
+</div>
