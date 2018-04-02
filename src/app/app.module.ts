@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { ROUTES } from './app.routes';
+
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -10,18 +12,21 @@ import { UserService } from './services/user.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    ROUTES
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
+import {  Router} from '@angular/router';
 
 
 
@@ -14,9 +15,17 @@ export class LoginComponent implements OnInit {
   formLogin: FormGroup;
   formRegistro: FormGroup;
   user:User;
-  constructor(private userService:UserService) {
+  hayErrorLogin:boolean=false;
+  errorMsg:string;
+  constructor(private userService:UserService,
+              private router:Router) {
     this.crearFormLogin();
     this.crearFormRegistro();
+    userService.isLogged().subscribe(isLogged=>{
+      if(isLogged){
+        router.navigate(['/home']);
+      }
+    });
   }
 
   crearFormLogin() {
@@ -24,6 +33,9 @@ export class LoginComponent implements OnInit {
       'password': new FormControl('', Validators.required),
       'email': new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")])
     });
+    this.formLogin.valueChanges.subscribe(data=>{
+      this.hayErrorLogin=false;
+    })
   }
   crearFormRegistro() {
     this.user=new User('','','','','USER','default.png');
@@ -46,8 +58,19 @@ export class LoginComponent implements OnInit {
   login() {
     this.userService.signIn(this.formLogin.value,true)
     .subscribe(data=>{
-      console.log(data);
+      //console.log(data);
       this.formLogin.reset();
+      if(data.user._id && data.token){
+        this.userService.setCurrentUser(data.user)
+        this.userService.setCurrentToken(data.token);
+        this.userService.estadoLogged.next(true);
+      }else{
+        this.hayErrorLogin=true;
+        this.errorMsg="Credenciales de acceso no validas";
+      }
+    },error=>{
+      this.hayErrorLogin=true;
+      this.errorMsg=JSON.parse(error._body).message;
     })
   }
   register() {
@@ -56,7 +79,7 @@ export class LoginComponent implements OnInit {
     this.user.email=this.formRegistro.value.email;
     this.user.password=this.formRegistro.value.password;
     this.userService.register(this.user).subscribe(data=>{
-      console.log(data);
+      //console.log(data);
       this.formRegistro.reset();
     });
   }
