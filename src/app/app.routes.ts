@@ -3,12 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import { UserDataComponent } from './components/user-data/user-data.component';
+import { UserComponent } from './components/user/user.component';
+import { USUARIO_ROUTES } from './components/user/user.routes';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'user/updateData', component: UserDataComponent },
+    { path: 'user', component: UserComponent,children:USUARIO_ROUTES },
     { path: '**', pathMatch:'full',  redirectTo:'/home' },
 
     //{ path: 'path/:routeParam', component: MyComponent },

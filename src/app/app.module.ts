@@ -14,7 +14,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { UserDataComponent } from './components/user-data/user-data.component';
+import { UserDataComponent } from './components/user/user-data.component';
+import { UserPhotoComponent } from './components/user/user-photo.component';
+import { UserPasswordComponent } from './components/user/user-password.component';
+import { UserComponent } from './components/user/user.component';
 
 
 @NgModule({
@@ -23,7 +26,10 @@ import { UserDataComponent } from './components/user-data/user-data.component';
     LoginComponent,
     HomeComponent,
     NavBarComponent,
-    UserDataComponent
+    UserDataComponent,
+    UserPhotoComponent,
+    UserPasswordComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
