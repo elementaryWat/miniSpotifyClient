@@ -1,7 +1,7 @@
 <div class="container main-container">
   <div class="row">
     <div class="col-md-6">
-      <h3>Login Usuario</h3>
+      <h3>Identificate</h3>
       <div class="alert alert-danger" role="alert" *ngIf="hayErrorLogin">
           {{errorMsgL}}
         </div>
@@ -22,7 +22,7 @@
           <label for="userPasswordL">Contraseña</label>
           <input type="password" [ngClass]="{'is-valid': formLogin.controls['password'].valid && formLogin.controls['password'].touched
               , 'is-invalid':formLogin.controls['password'].invalid && formLogin.controls['password'].touched}" class="form-control"
-            formControlName="password" id="userPasswordL" placeholder="******">
+            formControlName="password" id="userPasswordL" placeholder="********">
           <div class="invalid-feedback" *ngIf="formLogin.controls['password'].errors?.required">
             Debe ingresar la contraseña
           </div>
@@ -32,7 +32,7 @@
       </form>
     </div>
     <div class="col-md-6">
-      <h3>Registro Usuario</h3>
+      <h3>Registrate</h3>
       <div class="alert alert-success" role="alert" *ngIf="registroExitoso">
         Se ha registrado con exito. Inicie sesion para comenzar a disfrutar la mejor musica
       </div>
@@ -77,7 +77,7 @@
           <label for="userPasswordR">Contraseña</label>
           <input type="password" [ngClass]="{'is-valid': formRegistro.controls['password'].valid && formRegistro.controls['password'].touched
                 , 'is-invalid':formRegistro.controls['password'].invalid && formRegistro.controls['password'].touched}" class="form-control"
-            formControlName="password" id="userPasswordR" placeholder="******">
+            formControlName="password" id="userPasswordR" placeholder="********">
           <div class="invalid-feedback" *ngIf="formRegistro.controls['password'].errors?.pattern">
             <p>Formato de contraseña no valido</p>
             <p>Su contraseña debe tener un minimo de 8 caracteres incluyendo:</p>
@@ -95,7 +95,7 @@
             <label for="userConfirmPasswordR">Repetir contraseña</label>
             <input type="password" [ngClass]="{'is-valid': formRegistro.controls['confirmPassword'].valid && formRegistro.controls['confirmPassword'].touched
                   , 'is-invalid':formRegistro.controls['confirmPassword'].invalid && formRegistro.controls['confirmPassword'].touched}" class="form-control"
-              formControlName="confirmPassword" id="userConfirmPasswordR" placeholder="******">
+              formControlName="confirmPassword" id="userConfirmPasswordR" placeholder="********">
             <div class="invalid-feedback" *ngIf="formRegistro.controls['confirmPassword'].errors?.noIgual && !formRegistro.controls['confirmPassword'].errors?.required">
               Las contraseñas no coinciden
             </div>

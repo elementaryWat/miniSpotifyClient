@@ -76,6 +76,9 @@ export class UserService {
     this.currentToken=null;
     this.estadoLogged.next(false);
   }
+  getUrlImage(image:string){
+    return this.url+"/user/getImageFile/"+image;
+  }
   existeUsuarioConEmail(email:string):Observable<any>{
     let body=JSON.stringify({email:email});
     var headers=new Headers({'Content-Type':'application/json'});

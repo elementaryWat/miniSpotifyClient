@@ -1,5 +1,4 @@
 <div class="container">
-    <h3>Datos {{userService.currentUser.name}} {{userService.currentUser.surname}}</h3>
     <form [formGroup]="formUserData" (ngSubmit)="updateUserData()">
       <div class="form-group">
         <label for="name">Nombre</label>
@@ -32,7 +31,7 @@
         </div>
       </div>
       <div class="btn-form">
-        <button type="submit" class="btn btn-outline-primary" [disabled]="formUserData.invalid">Ingresar</button>    
+        <button type="submit" class="btn btn-outline-primary" [disabled]="formUserData.invalid">Actualizar datos</button>    
       </div>
       <!-- TODO: This is for server side, there is another version for browser defaults -->
     </form>

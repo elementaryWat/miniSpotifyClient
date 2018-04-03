@@ -1,3 +1,21 @@
-<p>
-  user-photo works!
-</p>
+<div class="container main-container">
+  <div class="row">
+    <div class="col-md-4">
+      <img [src]="urlImage" alt="userImage" class="rounded img-thumbnail">
+    </div>
+    <div class="col-md-8">
+      <form [formGroup]="formPhotoUser" (ngSubmit)="actualizarFoto()">
+        <div class="form-group">
+          <label for="fileImage">Subir nueva imagen</label>
+          <input type="file" class="form-control-file" formControlName="fileImage" accept="image/*" id="fileImage">
+          <div class="invalid-feedback" *ngIf="formPhotoUser.controls['fileImage'].errors?.required">
+            Debe seleccionar un archivo
+          </div>
+        </div>
+        <!-- TODO: This is for server side, there is another version for browser defaults -->
+        <button type="submit" class="btn btn-outline-primary" [disabled]="formPhotoUser.invalid">Actualizar foto</button>
+      </form>
+    </div>
+
+  </div>
+</div>
