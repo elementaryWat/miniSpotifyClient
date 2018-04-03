@@ -38,7 +38,9 @@ html, body{
     border-top: 1px solid #444;
     width: 85%;
 }
-
+.btn-logout{
+    cursor: pointer;
+}
 .head-title{
     text-align: center;
     margin-top: 10px;

@@ -16,8 +16,6 @@ export class AppComponent {
       this.logged=isLogged;
       if(!isLogged){
         router.navigate(['/login']);
-      }else{
-        router.navigate(['/home']);        
       }
     })
   }

@@ -20,9 +20,15 @@ export class LoginComponent implements OnInit {
   hayErrorRegistro:boolean=false;
   registroExitoso:boolean=false;
   errorMsgR:string;
-  constructor(private userService:UserService) {
+  constructor(private userService:UserService,
+    private router:Router) {
     this.crearFormLogin();
     this.crearFormRegistro();
+    userService.estadoLogged.subscribe(isLogged=>{
+      if(isLogged){
+        router.navigate(['/home']);
+      }
+    })
   }
 
   crearFormLogin() {
