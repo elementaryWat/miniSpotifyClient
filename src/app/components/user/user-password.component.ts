@@ -37,6 +37,8 @@ export class UserPasswordComponent implements OnInit {
           this.userService.actualizarPassword(this.formUserPassword.value.password)
             .subscribe(data => {
               this.cambioPasswordExitoso = true;
+              this.userService.setCurrentUser(data.user);
+              this.formUserPassword.reset();
             }, error => {
               console.log(error)
               this.hayErrorPassword = true;
