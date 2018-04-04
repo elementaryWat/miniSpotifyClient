@@ -18,12 +18,12 @@ export class UserService {
     private http: Http
   ) {
     this.estadoLogged=new BehaviorSubject(false);
-    this.url = GLOBAL.url;
+    this.url = GLOBAL.url+"/user";
   }
   register(userToRegister: User):Observable<any> {
     var body=JSON.stringify(userToRegister);
     var headers=new Headers({'Content-Type':'application/json'});
-    return this.http.post(this.url + "/user/register",body,{headers})
+    return this.http.post(this.url + "/register",body,{headers})
       .map(res => {
         return res.json();
       })
@@ -34,7 +34,7 @@ export class UserService {
     }
     var body=JSON.stringify(userToLogin);
     var headers=new Headers({'Content-Type':'application/json'});
-    return this.http.post(this.url + "/user/login",body,{headers})
+    return this.http.post(this.url + "/login",body,{headers})
       .map(res => {
         return res.json();
       })
@@ -76,14 +76,66 @@ export class UserService {
     this.currentToken=null;
     this.estadoLogged.next(false);
   }
-  getUrlImage(image:string){
-    return this.url+"/user/getImageFile/"+image;
+  getUrlImage(){
+    return this.url+"/getImageFile/"+this.currentUser.image;
+  }
+  actualizarImagenUsuarioRemoto(files:Array<File>){
+    return new Promise((resolve,reject)=>{
+      let formData=new FormData();
+      let xhr=new XMLHttpRequest();
+      for(let i=0;i<files.length;i++){
+        formData.append('avatar',files[i],files[i].name);
+      }
+      xhr.onreadystatechange=()=>{
+        if(xhr.readyState== XMLHttpRequest.DONE){
+          if (xhr.status==200){
+            resolve(JSON.parse(xhr.response));
+          }else{
+            reject(xhr.response);
+          }
+        }
+      }
+      xhr.open('POST',this.url+"/uploadUserImage/"+this.currentUser._id,true);
+      xhr.setRequestHeader('Authorization',this.currentToken);
+      xhr.send(formData);
+    })
+  }
+  actualizarImagenUsuarioLocal(image:string){
+    this.currentUser.image=image;
+    localStorage.setItem("user",JSON.stringify(this.currentUser));
+  }
+  actualizarDatosUsuario(user:User){
+    var body=JSON.stringify(user);
+    var headers=new Headers({'Content-Type':'application/json',
+      'Authorization':this.currentToken})
+    return this.http.put(this.url+"/update/"+this.currentUser._id,body,{headers})
+      .map(res=>{
+        return res.json();
+      })
+  }
+  passwordEqual(inputOldPassword:string,oldPassword:string){
+    var body=JSON.stringify({oldPassword, inputOldPassword});
+    var headers=new Headers({'Content-Type':'application/json',
+      'Authorization':this.currentToken})
+    return this.http.post(this.url+"/passwordEqual",body,{headers})
+      .map(res=>{
+        return res.json();
+      })
+  }
+  actualizarPassword(newPassword:string){
+    var body=JSON.stringify({password:newPassword});
+    var headers=new Headers({'Content-Type':'application/json',
+      'Authorization':this.currentToken})
+    return this.http.put(this.url+"/updatePassword/"+this.currentUser._id,body,{headers})
+      .map(res=>{
+        return res.json();
+      })
   }
   existeUsuarioConEmail(email:string):Observable<any>{
     let body=JSON.stringify({email:email});
     var headers=new Headers({'Content-Type':'application/json'});
     
-    return this.http.post(this.url+"/user/exist",body,{headers})
+    return this.http.post(this.url+"/exist",body,{headers})
       .map(res=>{
         return res.json();
       })

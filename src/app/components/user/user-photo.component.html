@@ -7,13 +7,11 @@
       <form [formGroup]="formPhotoUser" (ngSubmit)="actualizarFoto()">
         <div class="form-group">
           <label for="fileImage">Subir nueva imagen</label>
-          <input type="file" class="form-control-file" formControlName="fileImage" accept="image/*" id="fileImage">
-          <div class="invalid-feedback" *ngIf="formPhotoUser.controls['fileImage'].errors?.required">
-            Debe seleccionar un archivo
-          </div>
+          <input type="file" class="form-control-file" formControlName="fileImage" accept="image/*" id="fileImage"
+                (change)="selectImagesFiles($event)">
         </div>
         <!-- TODO: This is for server side, there is another version for browser defaults -->
-        <button type="submit" class="btn btn-outline-primary" >Actualizar foto</button>
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!imageFiles ||imageFiles.length==0">Actualizar foto</button>
       </form>
     </div>
 

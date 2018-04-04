@@ -25,6 +25,10 @@
   </a>
 </nav>
 <nav id="userLogged">
+    <a [routerLink]="[ '/user/updateData' ]">
+      <img id="imageUserNav" style="margin:0px auto;display:block" [src]="urlImage" alt="userImage" width="50px" height="50px" class="rounded-circle">
+      {{userService.currentUser.name}}
+    </a>
   <a [routerLink]="[ '/user/updateData' ]">
     <div class="fontA">
       <i class="fas fa-cog fa-lg"></i>
@@ -33,7 +37,7 @@
   </a>
   <a (click)="logOut()" class="btn-logout">
     <div class="fontA">
-      <i class="fas fa-sign-out fa-lg"></i>
+      <i class="fas fa-sign-out-alt fa-lg"></i>
     </div>
     Salir
   </a>
