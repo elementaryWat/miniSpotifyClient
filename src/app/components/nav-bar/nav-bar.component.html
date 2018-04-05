@@ -1,17 +1,19 @@
 <h5 class="head-title">
-  <div class="fontA">
-    <i class="fas fa-music fa-2x" style="color:#4db6ac"></i>
-  </div>
-  MUSIFY
+  <a [routerLink]="['/home']">
+    <div class="fontA">
+      <i class="fas fa-music fa-2x" style="color:#4db6ac"></i>
+    </div>
+    MUSIFY
+  </a>
 </h5>
 <nav>
   <a href="">
     <div class="fontA">
-      <i class="fas fa-search fa-lg"></i>
+      <i class="fas fa-search"></i>
     </div>
     Buscar
   </a>
-  <a href="">
+  <a [routerLink]="['/artists']" routerLinkActive="actived">
     <div class="fontA">
       <i class="fas fa-star fa-lg"></i>
     </div>
@@ -25,10 +27,10 @@
   </a>
 </nav>
 <nav id="userLogged">
-    <a [routerLink]="[ '/user/updateData' ]">
-      <img id="imageUserNav" style="margin:0px auto;display:block" [src]="urlImage" alt="userImage" width="50px" height="50px" class="rounded-circle">
-      {{userService.currentUser.name}}
-    </a>
+  <a [routerLink]="[ '/user/updateData' ]">
+    <img id="imageUserNav" style="margin:0px auto;display:block" [src]="urlImage" alt="userImage" width="50px" height="50px"
+      class="rounded-circle"> {{userService.currentUser.name}}
+  </a>
   <a [routerLink]="[ '/user/updateData' ]">
     <div class="fontA">
       <i class="fas fa-cog fa-lg"></i>

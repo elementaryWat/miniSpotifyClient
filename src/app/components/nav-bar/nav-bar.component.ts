@@ -8,7 +8,6 @@ import { UserService } from '../../services/user.service';
 })
 export class NavBarComponent implements OnInit {
   urlImage:string;
-
   constructor(private userService:UserService) {
     this.getImageUser();
    }

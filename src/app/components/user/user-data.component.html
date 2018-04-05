@@ -20,7 +20,7 @@
       <label for="surname">Apellido</label>
       <input type="text" [ngClass]="{'is-valid': formUserData.controls['surname'].valid && formUserData.controls['surname'].touched
                   , 'is-invalid':formUserData.controls['surname'].invalid && formUserData.controls['surname'].touched}"
-        class="form-control invalid" formControlName="surname" id="surname">
+        class="form-control" formControlName="surname" id="surname">
       <div class="invalid-feedback" *ngIf="formUserData.controls['surname'].errors?.required">
         Debe ingresar su apellido
       </div>
@@ -28,7 +28,7 @@
     <div class="form-group">
       <label for="email">Correo electronico</label>
       <input type="email" [ngClass]="{'is-valid': formUserData.controls['email'].valid && formUserData.controls['email'].touched
-            , 'is-invalid':formUserData.controls['email'].invalid && formUserData.controls['email'].touched}" class="form-control invalid"
+            , 'is-invalid':formUserData.controls['email'].invalid && formUserData.controls['email'].touched}" class="form-control"
         formControlName="email" id="email" placeholder="alguien@example.com">
       <div class="invalid-feedback" *ngIf="formUserData.controls['email'].errors?.pattern">
         Formato de correo no valido
@@ -43,6 +43,5 @@
     <div class="btn-form">
       <button type="submit" class="btn btn-outline-primary" [disabled]="formUserData.invalid">Actualizar datos</button>
     </div>
-    <!-- TODO: This is for server side, there is another version for browser defaults -->
   </form>
 </div>

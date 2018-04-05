@@ -43,7 +43,7 @@
         <div class="form-group">
           <label for="userName">Nombre</label>
           <input type="email" [ngClass]="{'is-valid': formRegistro.controls['name'].valid && formRegistro.controls['name'].touched
-                    , 'is-invalid':formRegistro.controls['name'].invalid && formRegistro.controls['name'].touched}" class="form-control invalid"
+                    , 'is-invalid':formRegistro.controls['name'].invalid && formRegistro.controls['name'].touched}" class="form-control"
             formControlName="name" id="userName">
           <div class="invalid-feedback" *ngIf="formRegistro.controls['name'].errors?.required">
             Debe ingresar su nombre
@@ -52,7 +52,7 @@
         <div class="form-group">
             <label for="userName">Apellido</label>
             <input type="email" [ngClass]="{'is-valid': formRegistro.controls['surname'].valid && formRegistro.controls['surname'].touched
-                      , 'is-invalid':formRegistro.controls['surname'].invalid && formRegistro.controls['surname'].touched}" class="form-control invalid"
+                      , 'is-invalid':formRegistro.controls['surname'].invalid && formRegistro.controls['surname'].touched}" class="form-control"
               formControlName="surname" id="userSurname">
             <div class="invalid-feedback" *ngIf="formRegistro.controls['surname'].errors?.required">
               Debe ingresar su apellido

@@ -18,6 +18,10 @@ import { UserDataComponent } from './components/user/user-data.component';
 import { UserPhotoComponent } from './components/user/user-photo.component';
 import { UserPasswordComponent } from './components/user/user-password.component';
 import { UserComponent } from './components/user/user.component';
+import { ArtistComponent } from './components/artist/artist.component';
+import { ArtistService } from './services/artist.service';
+import { ArtistAddComponent } from './components/artist/artist-add.component';
+import { ArtistListComponent } from './components/artist/artist-list.component';
 
 
 @NgModule({
@@ -29,7 +33,10 @@ import { UserComponent } from './components/user/user.component';
     UserDataComponent,
     UserPhotoComponent,
     UserPasswordComponent,
-    UserComponent
+    UserComponent,
+    ArtistComponent,
+    ArtistAddComponent,
+    ArtistListComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +45,7 @@ import { UserComponent } from './components/user/user.component';
     HttpModule,
     ROUTES
   ],
-  providers: [UserService],
+  providers: [UserService,ArtistService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

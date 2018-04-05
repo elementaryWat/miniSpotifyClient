@@ -36,9 +36,9 @@ export class UserPasswordComponent implements OnInit {
         if (data.equal) {
           this.userService.actualizarPassword(this.formUserPassword.value.password)
             .subscribe(data => {
-              this.cambioPasswordExitoso = true;
               this.userService.setCurrentUser(data.user);
               this.formUserPassword.reset();
+              this.cambioPasswordExitoso = true;
             }, error => {
               console.log(error)
               this.hayErrorPassword = true;

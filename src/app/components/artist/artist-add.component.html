@@ -1,0 +1,32 @@
+<div class="container">
+  <h3>Nuevo artista</h3>
+  <div class="alert alert-success" role="alert" *ngIf="createArtistExitoso">
+    Sus datos hay sido actualizados de manera correcta
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="hayErrorCreate">
+    {{errorCreate}}
+  </div>
+  <form [formGroup]="formNewArtist" (ngSubmit)="crearArtist()">
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <input type="text" [ngClass]="{'is-valid': formNewArtist.controls['name'].valid && formNewArtist.controls['name'].touched
+                  , 'is-invalid':formNewArtist.controls['name'].invalid && formNewArtist.controls['name'].touched}" class="form-control invalid"
+        formControlName="name" id="name">
+      <div class="invalid-feedback" *ngIf="formNewArtist.controls['name'].errors?.required">
+        Debe ingresar su nombre
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Descripcion</label>
+      <textarea [ngClass]="{'is-valid': formNewArtist.controls['description'].valid && formNewArtist.controls['description'].touched
+          , 'is-invalid':formNewArtist.controls['description'].invalid && formNewArtist.controls['description'].touched}" class="form-control"
+        formControlName="description" id="description" rows="3"></textarea>
+      <div class="invalid-feedback" *ngIf="formNewArtist.controls['description'].errors?.required">
+        Debe ingresar la descripcion del artista
+      </div>
+    </div>
+    <div class="btn-form">
+      <button type="submit" class="btn btn-outline-success" [disabled]="formNewArtist.invalid">Añadir artista</button>
+    </div>
+  </form>
+</div>
