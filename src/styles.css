@@ -17,6 +17,9 @@ html, body{
 .card:hover .card-footer{
     opacity: 1;
 }
+.card{
+    cursor: pointer;
+}
 .card-footer{
     opacity: 0;
     position: absolute;
@@ -25,6 +28,8 @@ html, body{
     right: 0px;
 }
 .navigation{
+    position: fixed;
+    width: 15%;
     text-align: center;
     color: white;
     background: #343a40;

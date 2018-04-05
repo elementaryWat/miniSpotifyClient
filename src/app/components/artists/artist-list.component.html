@@ -1,0 +1,56 @@
+<div class="container">
+    <h2>Todos los artistas
+        <button type="button" class="btn btn-outline-success" [routerLink]="[ '/artists/new-artist' ]">
+            <i class="fas fa-plus"></i>
+        </button>
+    </h2>
+    <div class="card-columns">
+        <div class="card bg-dark text-white" *ngFor="let artist of artists">
+            <img class="card-img" width="100px" [src]="urlImage+artist.image" alt="Card image">
+            <div class="card-img-overlay">
+                <h5 class="card-title">{{artist.name}}</h5>
+
+                <div class="card-footer">
+                    <button type="button" class="btn btn-outline-primary" [routerLink]="[ '/artists/new-artist' ]">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav aria-label="Page navigation" *ngIf="numeroPaginas">
+        <ul class="pagination justify-content-end">
+            <li class="page-item" [ngClass]="{'disabled': paginaActual==1}">
+                <a class="page-link" [routerLink]="['/artists/page',1]">Primero</a>
+            </li>
+            <li class="page-item" [ngClass]="{'disabled': (paginaActual-1)<=0}">
+                <a class="page-link" [routerLink]="['/artists/page',paginaActual-1]">Anterior</a>
+            </li>
+
+            <li class="page-item" *ngIf="((paginaActual-2)>0)&&((paginaActual+1)>numeroPaginas)">
+                <a class="page-link" [routerLink]="['/artists/page',paginaActual-2]">{{paginaActual-2}}</a>
+            </li>
+            <li class="page-item" *ngIf="(paginaActual-1)>0">
+                <a class="page-link" [routerLink]="['/artists/page',paginaActual-1]">{{paginaActual-1}}</a>
+            </li>
+            <li class="page-item active">
+                <span class="page-link">{{paginaActual}}</span>
+            </li>
+            <li class="page-item" *ngIf="(paginaActual+1)<=numeroPaginas">
+                <a class="page-link" [routerLink]="['/artists/page',paginaActual+1]">{{paginaActual+1}}</a>
+            </li>
+            <li class="page-item" *ngIf="((paginaActual+2)<=numeroPaginas)&&((paginaActual-1)<=0)">
+                <a class="page-link" [routerLink]="['/artists/page',paginaActual+2]">{{paginaActual+2}}</a>
+            </li>
+            <li class="page-item" [ngClass]="{'disabled': (paginaActual+1)>numeroPaginas}">
+                <a class="page-link" [routerLink]="['/artists/page',paginaActual+1]">Siguiente</a>
+            </li>
+            <li class="page-item" [ngClass]="{'disabled': paginaActual==numeroPaginas}">
+                <a class="page-link" [routerLink]="['/artists/page',numeroPaginas]">Ultimo</a>
+            </li>
+        </ul>
+    </nav>
+</div>

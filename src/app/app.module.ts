@@ -18,10 +18,10 @@ import { UserDataComponent } from './components/user/user-data.component';
 import { UserPhotoComponent } from './components/user/user-photo.component';
 import { UserPasswordComponent } from './components/user/user-password.component';
 import { UserComponent } from './components/user/user.component';
-import { ArtistComponent } from './components/artist/artist.component';
 import { ArtistService } from './services/artist.service';
-import { ArtistAddComponent } from './components/artist/artist-add.component';
-import { ArtistListComponent } from './components/artist/artist-list.component';
+import { ArtistAddComponent } from './components/artists/artist-add.component';
+import { ArtistListComponent } from './components/artists/artist-list.component';
+import { ArtistsComponent } from './components/artists/artists.component';
 
 
 @NgModule({
@@ -34,7 +34,7 @@ import { ArtistListComponent } from './components/artist/artist-list.component';
     UserPhotoComponent,
     UserPasswordComponent,
     UserComponent,
-    ArtistComponent,
+    ArtistsComponent,
     ArtistAddComponent,
     ArtistListComponent
   ],
