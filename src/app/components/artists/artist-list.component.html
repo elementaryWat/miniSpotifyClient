@@ -11,7 +11,7 @@
                 <h5 class="card-title">{{artist.name}}</h5>
 
                 <div class="card-footer">
-                    <button type="button" class="btn btn-outline-primary" [routerLink]="[ '/artists/new-artist' ]">
+                    <button type="button" class="btn btn-outline-primary" [routerLink]="[ '/artists/edit',artist._id ]">
                         <i class="fas fa-pencil-alt"></i>
                     </button>
                     <button type="button" class="btn btn-outline-danger">

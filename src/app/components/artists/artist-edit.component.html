@@ -1,0 +1,43 @@
+<div class="container main-container">
+  <h3>Editar artista</h3>
+  <div class="alert alert-success" role="alert" *ngIf="updateArtistExitoso">
+    Sus datos hay sido actualizados de manera correcta
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="hayErrorUpdate">
+    {{errorUpdate}}
+  </div>
+  <form [formGroup]="formUpdateArtist" (ngSubmit)="updateArtist()">
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <input type="text" [ngClass]="{'is-valid': formUpdateArtist.controls['name'].valid && formUpdateArtist.controls['name'].touched
+                    , 'is-invalid':formUpdateArtist.controls['name'].invalid && formUpdateArtist.controls['name'].touched}"
+        class="form-control invalid" formControlName="name" id="name">
+      <div class="invalid-feedback" *ngIf="formUpdateArtist.controls['name'].errors?.required">
+        Debe ingresar su nombre
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Descripcion</label>
+      <textarea [ngClass]="{'is-valid': formUpdateArtist.controls['description'].valid && formUpdateArtist.controls['description'].touched
+            , 'is-invalid':formUpdateArtist.controls['description'].invalid && formUpdateArtist.controls['description'].touched}"
+        class="form-control" formControlName="description" id="description" rows="3"></textarea>
+      <div class="invalid-feedback" *ngIf="formUpdateArtist.controls['description'].errors?.required">
+        Debe ingresar la descripcion del artista
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+          <img [src]="urlImage" alt="artistImage" class="rounded img-thumbnail">
+      </div>
+      <div class="col-md-8">
+        <div class="form-group">
+          <label for="fileImage">Subir nueva imagen</label>
+          <input type="file" class="form-control-file" accept="image/*" id="fileImage" name="fileImage" (change)="subirImageArtist($event)">
+        </div>
+      </div>
+    </div>
+    <div class="btn-form">
+      <button type="submit" class="btn btn-outline-primary" [disabled]="formUpdateArtist.invalid || (!cambioForm &&!hayImagen)">Actualizar datos</button>
+    </div>
+  </form>
+</div>

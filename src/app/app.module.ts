@@ -22,6 +22,7 @@ import { ArtistService } from './services/artist.service';
 import { ArtistAddComponent } from './components/artists/artist-add.component';
 import { ArtistListComponent } from './components/artists/artist-list.component';
 import { ArtistsComponent } from './components/artists/artists.component';
+import { ArtistEditComponent } from './components/artists/artist-edit.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { ArtistsComponent } from './components/artists/artists.component';
     UserComponent,
     ArtistsComponent,
     ArtistAddComponent,
-    ArtistListComponent
+    ArtistListComponent,
+    ArtistEditComponent
   ],
   imports: [
     BrowserModule,
