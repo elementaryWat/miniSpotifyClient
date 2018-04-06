@@ -13,6 +13,7 @@ export class ArtistListComponent implements OnInit {
   urlImage:string;
   paginaActual:number=1;
   numeroPaginas:number;
+  artistToDelete:Artist;
   constructor(private artistService:ArtistService,
     private activatedRoute:ActivatedRoute) { 
   }
@@ -31,4 +32,12 @@ export class ArtistListComponent implements OnInit {
     })
   }
 
+  selectArtistToDelete(artist:Artist){
+    this.artistToDelete=artist;
+  }
+  eliminarArtista(){
+    this.artistService.deleteArtist(this.artistToDelete._id).subscribe(data=>{
+      console.log(data);
+    })
+  }
 }

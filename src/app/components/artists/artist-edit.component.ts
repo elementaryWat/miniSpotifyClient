@@ -29,8 +29,6 @@ export class ArtistEditComponent implements OnInit {
       artistService.getArtist(this.artistId).subscribe(data => {
         this.currentArtist=data.artist;
         this.getUrlImage();
-      console.log(this.urlImage);
-        
         this.formUpdateArtist.patchValue(this.currentArtist);
         this.initialValue = this.formUpdateArtist.value;
         this.formUpdateArtist.valueChanges.subscribe(currentValue => {

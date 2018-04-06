@@ -12,6 +12,17 @@ export class ArtistService {
     private userService: UserService) {
     this.url = GLOBAL.url + "/artists";
   }
+  addArtist(artist: Artist) {
+    var body = JSON.stringify(artist);
+    var headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': this.userService.currentToken
+    });
+    return this.http.post(this.url + "/", body, { headers })
+      .map(res => {
+        return res.json()
+      })
+  }
   getArtists(page: number) {
     var body = JSON.stringify({ sortBy: 'createdAt', order: 'asc' });
     var headers = new Headers({
@@ -33,7 +44,7 @@ export class ArtistService {
         return res.json()
       })
   }
-  updateFotoArtistRemoto(files: Array<File>,artistId:string) {
+  updateFotoArtistRemoto(files: Array<File>, artistId: string) {
     return new Promise((resolve, reject) => {
       let xhr = new XMLHttpRequest();
       var formData = new FormData();
@@ -49,29 +60,27 @@ export class ArtistService {
           }
         }
       }
-      xhr.open('POST',this.url+"/uploadArtistImage/"+artistId,true);
-      xhr.setRequestHeader('Authorization',this.userService.currentToken);
+      xhr.open('POST', this.url + "/uploadArtistImage/" + artistId, true);
+      xhr.setRequestHeader('Authorization', this.userService.currentToken);
       xhr.send(formData);
     });
   }
-  updateDataArtist(update:any,artistId:string){
+  updateDataArtist(update: any, artistId: string) {
     var body = JSON.stringify(update);
     var headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': this.userService.currentToken
     });
-    return this.http.put(this.url + "/update/"+artistId, body, { headers })
+    return this.http.put(this.url + "/" + artistId, body, { headers })
       .map(res => {
         return res.json()
       })
   }
-  addArtist(artist: Artist) {
-    var body = JSON.stringify(artist);
+  deleteArtist(artistId: string) {
     var headers = new Headers({
-      'Content-Type': 'application/json',
       'Authorization': this.userService.currentToken
     });
-    return this.http.post(this.url + "/create", body, { headers })
+    return this.http.delete(this.url + "/" + artistId, { headers })
       .map(res => {
         return res.json()
       })
