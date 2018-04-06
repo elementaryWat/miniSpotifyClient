@@ -60,7 +60,7 @@ export class ArtistService {
       'Content-Type': 'application/json',
       'Authorization': this.userService.currentToken
     });
-    return this.http.post(this.url + "/update/"+artistId, body, { headers })
+    return this.http.put(this.url + "/update/"+artistId, body, { headers })
       .map(res => {
         return res.json()
       })

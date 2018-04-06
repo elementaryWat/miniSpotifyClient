@@ -12,11 +12,11 @@ import { Artist } from '../../models/artist';
 export class ArtistEditComponent implements OnInit {
   formUpdateArtist: FormGroup;
   imageArtist: Array<File>;
-  currentArtist:Artist;
   initialValue: string;
   cambioForm: boolean = false;
   urlImage:string;
   hayImagen = false;
+  currentArtist:Artist;
   artistId: string;
   updateArtistExitoso: boolean = false;
   hayErrorUpdate: boolean = false;
@@ -26,10 +26,11 @@ export class ArtistEditComponent implements OnInit {
     this.crearFormUpdateArtist();
     activatedRoute.params.subscribe(params => {
       this.artistId = params['artistId'];
-      console.log(this.urlImage);
       artistService.getArtist(this.artistId).subscribe(data => {
         this.currentArtist=data.artist;
         this.getUrlImage();
+      console.log(this.urlImage);
+        
         this.formUpdateArtist.patchValue(this.currentArtist);
         this.initialValue = this.formUpdateArtist.value;
         this.formUpdateArtist.valueChanges.subscribe(currentValue => {
@@ -53,13 +54,25 @@ export class ArtistEditComponent implements OnInit {
     if (this.hayImagen) {
       this.artistService.updateFotoArtistRemoto(this.imageArtist, this.artistId)
         .then(result => {
-          console.log(result);
           this.updateArtistExitoso=true;
+          this.currentArtist.image=(<any>result).image;
           this.getUrlImage();
+        })
+        .catch(error=>{
+          console.log(error);
+          this.hayErrorUpdate=true;
+          this.errorUpdate="Ocurrio un error al actualizar la foto";
         })
     }
     if (this.cambioForm) {
-      console.log("Se actualizaran los datos");
+      this.artistService.updateDataArtist(this.formUpdateArtist.value,this.artistId)
+        .subscribe(data=>{
+          this.updateArtistExitoso=true;
+        },error=>{
+          console.log(error);
+          this.hayErrorUpdate=true;
+          this.errorUpdate="Ocurrio un error al actualizar sus datos";
+        });
     }
   }
   subirImageArtist(fileInput: any) {
