@@ -1,0 +1,15 @@
+
+<div class="jumbotron artist-header">
+    <div class="row" *ngIf="currentArtist">
+        <div class="col-md-4">
+            <img [src]="urlImage" alt="artistImage" class="rounded-circle img-thumbnail">    
+        </div>
+        <div class="col-md-8">
+          <h2 class="display-4">{{currentArtist.name}}</h2>
+          <p class="lead">
+              {{currentArtist.description}}
+            </p>
+        </div>
+      </div>
+  </div>
+  <app-albums></app-albums>

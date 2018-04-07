@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../../models/user';
+import { UploadService } from '../../services/upload.service';
 
 @Component({
   selector: 'app-user-photo',
@@ -11,7 +12,8 @@ import { User } from '../../models/user';
 export class UserPhotoComponent implements OnInit {
   urlImage: string;
   formPhotoUser: FormGroup;
-  constructor(private userService: UserService,) {
+  constructor(private userService: UserService,
+    private uploadService:UploadService) {
     this.updateUserImageDiv();
     this.crearFormPhotoUser();
   }
@@ -28,7 +30,8 @@ export class UserPhotoComponent implements OnInit {
     this.imageFiles=fileInput.target.files;
   }
   actualizarFoto(){
-    this.userService.actualizarImagenUsuarioRemoto(this.imageFiles)
+    this.uploadService.makeFileUpload(this.imageFiles,
+    this.userService.url+this.userService.photoUploadRoute+this.userService.currentUser._id)
     .then(result=>{
       this.userService.actualizarImagenUsuarioLocal((<any>result).image);
       this.imageFiles=null;

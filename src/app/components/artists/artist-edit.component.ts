@@ -3,6 +3,7 @@ import { ArtistService } from '../../services/artist.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Artist } from '../../models/artist';
+import { UploadService } from '../../services/upload.service';
 
 @Component({
   selector: 'app-artist-edit',
@@ -22,6 +23,7 @@ export class ArtistEditComponent implements OnInit {
   hayErrorUpdate: boolean = false;
   errorUpdate: string;
   constructor(private artistService: ArtistService,
+    private fileUploadService:UploadService,
     private activatedRoute: ActivatedRoute) {
     this.crearFormUpdateArtist();
     activatedRoute.params.subscribe(params => {
@@ -50,7 +52,8 @@ export class ArtistEditComponent implements OnInit {
   }
   updateArtist() {
     if (this.hayImagen) {
-      this.artistService.updateFotoArtistRemoto(this.imageArtist, this.artistId)
+      this.fileUploadService.makeFileUpload(this.imageArtist, 
+        this.artistService.url+ this.artistService.photoUploadRoute + this.artistId)
         .then(result => {
           this.updateArtistExitoso=true;
           this.currentArtist.image=(<any>result).image;

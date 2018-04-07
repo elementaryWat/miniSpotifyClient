@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArtistService } from '../../services/artist.service';
 import { Artist } from '../../models/artist';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-artist-list',
@@ -15,6 +15,7 @@ export class ArtistListComponent implements OnInit {
   numeroPaginas:number;
   artistToDelete:Artist;
   constructor(private artistService:ArtistService,
+    private router:Router,
     private activatedRoute:ActivatedRoute) { 
   }
 
@@ -24,11 +25,18 @@ export class ArtistListComponent implements OnInit {
       {
         this.paginaActual=parseInt(params['numPage']);
       }
-      this.artistService.getArtists(this.paginaActual).subscribe(data=>{
-        this.artists=data.artists;
-        this.urlImage=this.artistService.getUrlImage();
-        this.numeroPaginas=data.pages;
-      });
+      if(this.paginaActual<1){
+        this.router.navigate(['artists/page',1]);
+      }else{
+        this.artistService.getArtists(this.paginaActual).subscribe(data=>{
+          this.artists=data.artists;
+          this.urlImage=this.artistService.getUrlImage();
+          this.numeroPaginas=data.pages;
+          if(this.paginaActual>this.numeroPaginas){
+            this.router.navigate(['artists/page',this.numeroPaginas]);
+          }
+        });
+      }
     })
   }
 

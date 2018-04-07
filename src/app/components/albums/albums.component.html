@@ -1,0 +1,36 @@
+<div class="card-columns">
+  <!-- <div class="card bg-dark text-white" *ngFor="let album of albums">
+    <img class="card-img" width="100px" [src]="urlImage+album.image" alt="Card image">
+    <div class="card-img-overlay">
+      <h5 class="card-title">{{album.title}}</h5>
+
+      <div class="card-footer">
+        <button type="button" class="btn btn-outline-primary">
+          <i class="fas fa-pencil-alt"></i>
+        </button>
+        <button type="button" class="btn btn-outline-danger">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div> -->
+  <div class="card border-dark album-card  mb-3" style="max-width: 18rem;" *ngFor="let album of albums">
+    <div class="card-header bg-transparent border-light album-header">
+      <h4>{{album.title}}</h4>
+      <p>{{album.year}} </p>
+    </div>
+    <div class="card-body text-dark album-image">
+      <img class="card-img" width="100px" [src]="urlImage+album.image" alt="Card image">
+    </div>
+    <div class="card-footer bg-transparent border-light  ">
+      <div class="options-album"> 
+        <button type="button" class="btn btn-outline-primary">
+          <i class="fas fa-pencil-alt"></i>
+        </button>
+        <button type="button" class="btn btn-outline-danger">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

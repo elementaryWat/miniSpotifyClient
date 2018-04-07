@@ -8,9 +8,11 @@ import { reject } from 'q';
 @Injectable()
 export class ArtistService {
   url: string;
+  photoUploadRoute:string;
   constructor(private http: Http,
     private userService: UserService) {
     this.url = GLOBAL.url + "/artists";
+    this.photoUploadRoute="/uploadArtistImage/";
   }
   addArtist(artist: Artist) {
     var body = JSON.stringify(artist);
@@ -24,7 +26,7 @@ export class ArtistService {
       })
   }
   getArtists(page: number) {
-    var body = JSON.stringify({ sortBy: 'createdAt', order: 'asc' });
+    var body = JSON.stringify({ sortBy: 'createdAt', order: 'desc' });
     var headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': this.userService.currentToken
@@ -44,27 +46,18 @@ export class ArtistService {
         return res.json()
       })
   }
-  updateFotoArtistRemoto(files: Array<File>, artistId: string) {
-    return new Promise((resolve, reject) => {
-      let xhr = new XMLHttpRequest();
-      var formData = new FormData();
-      for (let i = 0; i < files.length; i++) {
-        formData.append('avatar', files[i]);
-      }
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-          if (xhr.status == 200) {
-            resolve(JSON.parse(xhr.response));
-          } else {
-            reject(xhr.response);
-          }
-        }
-      }
-      xhr.open('POST', this.url + "/uploadArtistImage/" + artistId, true);
-      xhr.setRequestHeader('Authorization', this.userService.currentToken);
-      xhr.send(formData);
+  existArtist(artistName:string){
+    var body = JSON.stringify({ artistName });
+    var headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': this.userService.currentToken
     });
+    return this.http.post(this.url + "/exist" , body, { headers })
+      .map(res => {
+        return res.json();
+      });
   }
+
   updateDataArtist(update: any, artistId: string) {
     var body = JSON.stringify(update);
     var headers = new Headers({

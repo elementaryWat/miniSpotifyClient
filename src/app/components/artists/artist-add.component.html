@@ -1,8 +1,5 @@
 <div class="container main-container">
   <h3>Nuevo artista</h3>
-  <div class="alert alert-success" role="alert" *ngIf="createArtistExitoso">
-    Sus datos hay sido actualizados de manera correcta
-  </div>
   <div class="alert alert-danger" role="alert" *ngIf="hayErrorCreate">
     {{errorCreate}}
   </div>
@@ -15,12 +12,15 @@
       <div class="invalid-feedback" *ngIf="formNewArtist.controls['name'].errors?.required">
         Debe ingresar su nombre
       </div>
+      <div class="invalid-feedback" *ngIf="formNewArtist.controls['name'].errors?.existeArtista">
+        Ya existe un artista con este nombre
+      </div>
     </div>
     <div class="form-group">
       <label for="description">Descripcion</label>
       <textarea [ngClass]="{'is-valid': formNewArtist.controls['description'].valid && formNewArtist.controls['description'].touched
-          , 'is-invalid':formNewArtist.controls['description'].invalid && formNewArtist.controls['description'].touched}" class="form-control"
-        formControlName="description" id="description" rows="3"></textarea>
+          , 'is-invalid':formNewArtist.controls['description'].invalid && formNewArtist.controls['description'].touched}"
+        class="form-control" formControlName="description" id="description" rows="3"></textarea>
       <div class="invalid-feedback" *ngIf="formNewArtist.controls['description'].errors?.required">
         Debe ingresar la descripcion del artista
       </div>

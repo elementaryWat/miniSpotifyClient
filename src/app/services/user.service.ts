@@ -11,6 +11,7 @@ import { User } from '../models/user';
 @Injectable()
 export class UserService {
   url: string;
+  photoUploadRoute:string;
   currentUser:User;
   currentToken:string;
   estadoLogged:BehaviorSubject<boolean>;
@@ -19,6 +20,7 @@ export class UserService {
   ) {
     this.estadoLogged=new BehaviorSubject(false);
     this.url = GLOBAL.url+"/user";
+    this.photoUploadRoute="/uploadUserImage/";
   }
   register(userToRegister: User):Observable<any> {
     var body=JSON.stringify(userToRegister);
@@ -78,27 +80,6 @@ export class UserService {
   }
   getUrlImage(){
     return this.url+"/getImageFile/"+this.currentUser.image;
-  }
-  actualizarImagenUsuarioRemoto(files:Array<File>){
-    return new Promise((resolve,reject)=>{
-      let formData=new FormData();
-      let xhr=new XMLHttpRequest();
-      for(let i=0;i<files.length;i++){
-        formData.append('avatar',files[i],files[i].name);
-      }
-      xhr.onreadystatechange=()=>{
-        if(xhr.readyState== XMLHttpRequest.DONE){
-          if (xhr.status==200){
-            resolve(JSON.parse(xhr.response));
-          }else{
-            reject(xhr.response);
-          }
-        }
-      }
-      xhr.open('POST',this.url+"/uploadUserImage/"+this.currentUser._id,true);
-      xhr.setRequestHeader('Authorization',this.currentToken);
-      xhr.send(formData);
-    })
   }
   actualizarImagenUsuarioLocal(image:string){
     this.currentUser.image=image;

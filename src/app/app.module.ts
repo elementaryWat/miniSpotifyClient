@@ -23,6 +23,10 @@ import { ArtistAddComponent } from './components/artists/artist-add.component';
 import { ArtistListComponent } from './components/artists/artist-list.component';
 import { ArtistsComponent } from './components/artists/artists.component';
 import { ArtistEditComponent } from './components/artists/artist-edit.component';
+import { UploadService } from './services/upload.service';
+import { AlbumsComponent } from './components/albums/albums.component';
+import { ArtistComponent } from './components/artists/artist.component';
+import { AlbumService } from './services/album.service';
 
 
 @NgModule({
@@ -38,7 +42,9 @@ import { ArtistEditComponent } from './components/artists/artist-edit.component'
     ArtistsComponent,
     ArtistAddComponent,
     ArtistListComponent,
-    ArtistEditComponent
+    ArtistEditComponent,
+    AlbumsComponent,
+    ArtistComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +53,7 @@ import { ArtistEditComponent } from './components/artists/artist-edit.component'
     HttpModule,
     ROUTES
   ],
-  providers: [UserService,ArtistService],
+  providers: [UserService,ArtistService,AlbumService,UploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
