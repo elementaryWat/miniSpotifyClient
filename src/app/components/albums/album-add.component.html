@@ -1,0 +1,41 @@
+<div class="container main-container">
+  <h3>Nuevo album de artista</h3>
+  <div class="alert alert-danger" role="alert" *ngIf="createAlbumExitoso">
+      
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="hayErrorCreate">
+    {{errorCreate}}
+  </div>
+  <form [formGroup]="formNewAlbum" (ngSubmit)="crearAlbum()">
+    <div class="form-group">
+      <label for="title">Titulo</label>
+      <input type="text" [ngClass]="{'is-valid': formNewAlbum.controls['title'].valid && formNewAlbum.controls['title'].touched
+                    , 'is-invalid':formNewAlbum.controls['title'].invalid && formNewAlbum.controls['title'].touched}" class="form-control invalid"
+        formControlName="title" id="title">
+      <div class="invalid-feedback" *ngIf="formNewAlbum.controls['title'].errors?.required">
+        Debe ingresar el nombre del album
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Descripcion</label>
+      <textarea [ngClass]="{'is-valid': formNewAlbum.controls['description'].valid && formNewAlbum.controls['description'].touched
+            , 'is-invalid':formNewAlbum.controls['description'].invalid && formNewAlbum.controls['description'].touched}"
+        class="form-control" formControlName="description" id="description" rows="3"></textarea>
+      <div class="invalid-feedback" *ngIf="formNewAlbum.controls['description'].errors?.required">
+        Debe ingresar la descripcion del artista
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="year">Año</label>
+        <input type="number" [ngClass]="{'is-valid': formNewAlbum.controls['year'].valid && formNewAlbum.controls['year'].touched
+                      , 'is-invalid':formNewAlbum.controls['year'].invalid && formNewAlbum.controls['year'].touched}" class="form-control invalid"
+          formControlName="year" id="year">
+        <div class="invalid-feedback" *ngIf="formNewAlbum.controls['year'].errors?.required">
+          Debe ingresar el año del album
+        </div>
+      </div>
+    <div class="btn-form">
+      <button type="submit" class="btn btn-outline-success" [disabled]="formNewAlbum.invalid">Añadir album</button>
+    </div>
+  </form>
+</div>

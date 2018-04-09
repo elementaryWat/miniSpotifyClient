@@ -9,21 +9,9 @@ import { Album } from '../../models/album';
   styles: []
 })
 export class AlbumsComponent implements OnInit {
-  albums:Album[]=[];
-  urlImage:string;
-  constructor(private activatedRoute:ActivatedRoute,
-    private albumService:AlbumService) { 
-    this.getUrlImage();
-    activatedRoute.params.subscribe(params=>{
-      albumService.getAlbums(params['artistId']).subscribe(data=>{
-        this.albums=data.albums;
-      });
-    })
+  constructor() { 
   }
 
   ngOnInit() {
-  }
-  getUrlImage(){
-    this.urlImage=this.albumService.url+"/getAlbumImage/";
   }
 }

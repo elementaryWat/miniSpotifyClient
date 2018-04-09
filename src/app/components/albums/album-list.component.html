@@ -1,0 +1,35 @@
+<h2 *ngIf="artistId">Albumes
+    <button type="button" class="btn btn-outline-success" [routerLink]="[ '/albums/new-album/artist' ,artistId]">
+        <i class="fas fa-plus"></i>
+    </button>
+</h2>
+<h2 *ngIf="!artistId">Todos los albumes</h2>
+<div [ngClass]="{'card-colums': albums.length>3}">
+    <div class="card border-dark album-card  mb-3" style="max-width: 18rem;" *ngFor="let album of albums">
+      <div class="card-header bg-transparent border-light album-header">
+        <h4>{{album.title}}</h4>
+        <p>{{album.year}} </p>
+      </div>
+      <div class="card-body text-dark album-image">
+        <img class="card-img" width="100px" [src]="urlImageAlbum+album.image" alt="Card image">
+      </div>
+      <div class="card-footer bg-transparent border-light  ">
+        <div class="options-album" *ngIf="artistId"> 
+          <button type="button" class="btn btn-outline-primary">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+          <button type="button" class="btn btn-outline-danger">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <div class="row" *ngIf="!artistId">
+          <div class="col-md-3">
+              <img class="img-thumbnail artist-image-min rounded-circle" [src]="urlImageArtist+album.artist.image" alt="Artist image">
+          </div>
+          <div class="col-md-9">
+            <a [routerLink]="[ '/artists/artist', album.artist._id ]">{{album.artist.name}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

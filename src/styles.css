@@ -25,6 +25,7 @@ html, body{
     cursor: pointer;
 }
 .artist-header{
+    padding: 2rem 1rem;
     color:#ddd;
     background: #0e0e0e; /* Old browsers */
     background: -moz-linear-gradient(top, #0e0e0e 0%, #7d7e7d 100%); /* FF3.6-15 */
@@ -38,6 +39,10 @@ html, body{
     display: block;
     bottom: 0px;
     right: 0px;
+}
+.artist-image-min{
+    padding: 0px;
+    border: 0px;
 }
 .album-header{
     padding: .25rem;

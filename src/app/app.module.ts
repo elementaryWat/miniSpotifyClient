@@ -27,6 +27,9 @@ import { UploadService } from './services/upload.service';
 import { AlbumsComponent } from './components/albums/albums.component';
 import { ArtistComponent } from './components/artists/artist.component';
 import { AlbumService } from './services/album.service';
+import { AlbumAddComponent } from './components/albums/album-add.component';
+import { AlbumEditComponent } from './components/albums/album-edit.component';
+import { AlbumListComponent } from './components/albums/album-list.component';
 
 
 @NgModule({
@@ -44,7 +47,10 @@ import { AlbumService } from './services/album.service';
     ArtistListComponent,
     ArtistEditComponent,
     AlbumsComponent,
-    ArtistComponent
+    ArtistComponent,
+    AlbumAddComponent,
+    AlbumEditComponent,
+    AlbumListComponent
   ],
   imports: [
     BrowserModule,
