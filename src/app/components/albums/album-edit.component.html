@@ -1,3 +1,41 @@
-<p>
-  album-edit works!
-</p>
+<div class="container main-container">
+    <h3>Editar datos del album</h3>
+    <div class="alert alert-danger" role="alert" *ngIf="updateAlbumExitoso">
+        Se han editado los datos del album correctamente
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="hayErrorUpdate">
+      {{errorUpdate}}
+    </div>
+    <form [formGroup]="formUpdateAlbum" (ngSubmit)="actualizarAlbum()">
+      <div class="form-group">
+        <label for="title">Titulo</label>
+        <input type="text" [ngClass]="{'is-valid': formUpdateAlbum.controls['title'].valid && formUpdateAlbum.controls['title'].touched
+                      , 'is-invalid':formUpdateAlbum.controls['title'].invalid && formUpdateAlbum.controls['title'].touched}" class="form-control invalid"
+          formControlName="title" id="title">
+        <div class="invalid-feedback" *ngIf="formUpdateAlbum.controls['title'].errors?.required">
+          Debe ingresar el nombre del album
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">Descripcion</label>
+        <textarea [ngClass]="{'is-valid': formUpdateAlbum.controls['description'].valid && formUpdateAlbum.controls['description'].touched
+              , 'is-invalid':formUpdateAlbum.controls['description'].invalid && formUpdateAlbum.controls['description'].touched}"
+          class="form-control" formControlName="description" id="description" rows="3"></textarea>
+        <div class="invalid-feedback" *ngIf="formUpdateAlbum.controls['description'].errors?.required">
+          Debe ingresar la descripcion del album
+        </div>
+      </div>
+      <div class="form-group">
+          <label for="year">Año</label>
+          <input type="number" [ngClass]="{'is-valid': formUpdateAlbum.controls['year'].valid && formUpdateAlbum.controls['year'].touched
+                        , 'is-invalid':formUpdateAlbum.controls['year'].invalid && formUpdateAlbum.controls['year'].touched}" class="form-control invalid"
+            formControlName="year" id="year">
+          <div class="invalid-feedback" *ngIf="formUpdateAlbum.controls['year'].errors?.required">
+            Debe ingresar el año del album
+          </div>
+        </div>
+      <div class="btn-form">
+        <button type="submit" class="btn btn-outline-success" [disabled]="formUpdateAlbum.invalid">Actualizar datos</button>
+      </div>
+    </form>
+  </div>

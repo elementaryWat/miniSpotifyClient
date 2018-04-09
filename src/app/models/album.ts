@@ -1,9 +1,9 @@
 export class Album{
     constructor(
-        public title:String,
-        public description:String,
+        public title:string,
+        public description:string,
         public year:Number,
-        public image:String,
-        public Artist:String
+        public image:string,
+        public artist:string
     ){}
 }

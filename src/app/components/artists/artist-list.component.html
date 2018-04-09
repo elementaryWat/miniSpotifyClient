@@ -5,10 +5,10 @@
         </button>
     </h2>
     <div class="card-columns">
-        <div class="card bg-dark text-white artist-card" *ngFor="let artist of artists" [routerLink]="[ '/artists/artist',artist._id ]">
-            <img class="card-img" width="100px" [src]="urlImage+artist.image" alt="Card image">
+        <div class="card bg-dark text-white artist-card" *ngFor="let artist of artists">
+            <img  class="card-img" width="100px" [src]="urlImage+artist.image" alt="Card image">
             <div class="card-img-overlay">
-                <h5 class="card-title">{{artist.name}}</h5>
+                <h5 class="card-title"><a style="color:white" [routerLink]="[ '/artists/artist',artist._id ]">{{artist.name}}</a></h5>
                 <div class="card-footer">
                     <button type="button" class="btn btn-outline-primary" [routerLink]="[ '/artists/edit',artist._id ]">
                         <i class="fas fa-pencil-alt"></i>

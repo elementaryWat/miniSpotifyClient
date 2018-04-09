@@ -23,7 +23,6 @@ export class AlbumListComponent implements OnInit {
       this.getUrlImageArtist();
       albumService.getAlbums(this.artistId).subscribe(data=>{
         this.albums=data.albums;
-        console.log(data);
       });
     })
   }
