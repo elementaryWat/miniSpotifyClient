@@ -57,6 +57,8 @@ export class ArtistEditComponent implements OnInit {
         .then(result => {
           this.updateArtistExitoso=true;
           this.currentArtist.image=(<any>result).image;
+          this.imageArtist=null;          
+          this.hayImagen=false;
           this.getUrlImage();
         })
         .catch(error=>{
@@ -69,14 +71,16 @@ export class ArtistEditComponent implements OnInit {
       this.artistService.updateDataArtist(this.formUpdateArtist.value,this.artistId)
         .subscribe(data=>{
           this.updateArtistExitoso=true;
+          this.initialValue=this.formUpdateArtist.value;
+          this.cambioForm=false;
         },error=>{
           console.log(error);
           this.hayErrorUpdate=true;
-          this.errorUpdate="Ocurrio un error al actualizar sus datos";
+          this.errorUpdate="Ocurrio un error al actualizar los datos del artista";
         });
     }
   }
-  subirImageArtist(fileInput: any) {
+  selectImageArtist(fileInput: any) {
     this.imageArtist = <Array<File>>fileInput.target.files;
     this.hayImagen = this.imageArtist.length > 0;
     this.hayErrorUpdate = false;

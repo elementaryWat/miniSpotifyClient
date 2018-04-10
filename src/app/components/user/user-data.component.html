@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="btn-form">
-      <button type="submit" class="btn btn-outline-primary" [disabled]="formUserData.invalid">Actualizar datos</button>
+      <button type="submit" class="btn btn-outline-primary" [disabled]="formUserData.invalid || !cambioForm">Actualizar datos</button>
     </div>
   </form>
 </div>

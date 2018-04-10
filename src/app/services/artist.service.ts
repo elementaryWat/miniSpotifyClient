@@ -8,11 +8,10 @@ import { reject } from 'q';
 @Injectable()
 export class ArtistService {
   url: string;
-  photoUploadRoute:string;
+  photoUploadRoute:string="/uploadArtistImage/";
   constructor(private http: Http,
     private userService: UserService) {
     this.url = GLOBAL.url + "/artists";
-    this.photoUploadRoute="/uploadArtistImage/";
   }
   addArtist(artist: Artist) {
     var body = JSON.stringify(artist);

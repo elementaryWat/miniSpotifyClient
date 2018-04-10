@@ -13,6 +13,8 @@ export class UserDataComponent implements OnInit {
   updateDataExitoso:boolean=false;
   hayErrorUpdate:boolean=false;
   errorUpdate:string;
+  initialValue:string;
+  cambioForm:boolean=false;
   ngOnInit() {
     this.crearFormUserData();
   }
@@ -23,8 +25,10 @@ export class UserDataComponent implements OnInit {
       'email': new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")])
     });
     this.formUserData.patchValue(this.userService.currentUser);
+    this.initialValue = this.formUserData.value;    
     this.formUserData.controls['email'].setAsyncValidators(this.existeUsuario.bind(this));
     this.formUserData.valueChanges.subscribe(currentValue=>{
+      this.cambioForm = JSON.stringify(this.initialValue) != JSON.stringify(currentValue);      
       this.updateDataExitoso=false;
       this.hayErrorUpdate=false;
     })
@@ -34,6 +38,8 @@ export class UserDataComponent implements OnInit {
       .subscribe(data=>{
         this.updateDataExitoso=true;
         this.userService.setCurrentUser(data.user);
+        this.initialValue=this.formUserData.value;
+        this.cambioForm=false;
       },error=>{
         console.log(error);
         this.hayErrorUpdate=true;
