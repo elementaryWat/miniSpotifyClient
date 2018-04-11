@@ -1,3 +1,10 @@
-<p>
-  album works!
-</p>
+<div class="row" *ngIf="currentAlbum">
+  <div class="col-md-3">
+    <img [src]="urlImage" alt="albumImage" class="rounded img-thumbnail">    
+  </div>
+  <div class="col-md-9">
+    <h2>{{currentAlbum.title}} </h2>
+    <p>{{currentAlbum.year}} </p>
+  </div>
+</div>
+<app-song-list></app-song-list>

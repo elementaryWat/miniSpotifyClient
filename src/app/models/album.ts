@@ -4,6 +4,7 @@ export class Album{
         public description:string,
         public year:Number,
         public image:string,
-        public artist:string
+        public artist:string,
+        public _id?:string
     ){}
 }

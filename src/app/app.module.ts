@@ -32,6 +32,10 @@ import { AlbumEditComponent } from './components/albums/album-edit.component';
 import { AlbumListComponent } from './components/albums/album-list.component';
 import { AlbumComponent } from './components/albums/album.component';
 import { SongsComponent } from './components/songs/songs.component';
+import { SongService } from './services/song.service';
+import { SongListComponent } from './components/songs/song-list.component';
+import { SongAddComponent } from './components/songs/song-add.component';
+import { DurationPipe } from './pipes/duration.pipe';
 
 
 @NgModule({
@@ -54,7 +58,10 @@ import { SongsComponent } from './components/songs/songs.component';
     AlbumEditComponent,
     AlbumListComponent,
     AlbumComponent,
-    SongsComponent
+    SongsComponent,
+    SongListComponent,
+    SongAddComponent,
+    DurationPipe
   ],
   imports: [
     BrowserModule,
@@ -63,7 +70,7 @@ import { SongsComponent } from './components/songs/songs.component';
     HttpModule,
     ROUTES
   ],
-  providers: [UserService,ArtistService,AlbumService,UploadService],
+  providers: [UserService,ArtistService,AlbumService,SongService,UploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
