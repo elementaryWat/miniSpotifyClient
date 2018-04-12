@@ -36,6 +36,7 @@ import { SongService } from './services/song.service';
 import { SongListComponent } from './components/songs/song-list.component';
 import { SongAddComponent } from './components/songs/song-add.component';
 import { DurationPipe } from './pipes/duration.pipe';
+import { SocketService } from './services/socket.service';
 
 
 @NgModule({
@@ -70,7 +71,7 @@ import { DurationPipe } from './pipes/duration.pipe';
     HttpModule,
     ROUTES
   ],
-  providers: [UserService,ArtistService,AlbumService,SongService,UploadService],
+  providers: [UserService,ArtistService,AlbumService,SongService,UploadService,SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

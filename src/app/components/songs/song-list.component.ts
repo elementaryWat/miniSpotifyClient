@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SongService } from '../../services/song.service';
 import { ActivatedRoute } from '@angular/router';
 import { Song } from '../../models/song';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-song-list',
@@ -12,8 +13,13 @@ export class SongListComponent implements OnInit {
   albumId:string;
   songs:Song[];
   songSelected:string="";
+  socket:any;
   constructor(private songService:SongService,
-    private activatedRoute:ActivatedRoute) { 
+    private activatedRoute:ActivatedRoute,
+    private socketService:SocketService) { 
+      this.socket=socketService.socket;
+      //Para empezar a recibir las canciones 
+      this.socket.emit('new-song');      
     activatedRoute.params.subscribe(params=>{
       this.albumId=params['albumId'];
       songService.getSongs(this.albumId).subscribe(data=>{

@@ -6,8 +6,8 @@ import 'jquery';
 import 'bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Album } from '../../models/album';
-declare var jquery:any;
-declare var $ :any;
+import { SocketService } from '../../services/socket.service';
+
 
 @Component({
   selector: 'app-song-add',
@@ -21,11 +21,14 @@ export class SongAddComponent implements OnInit {
   hayErrorCreate:boolean=false;
   hayAudio:boolean=false;
   loading:boolean=false;
+  socket:any;
   constructor(private router:Router,
     private activatedRoute:ActivatedRoute,
     private uploadFileService:UploadService,
-    private songService:SongService) { 
+    private songService:SongService,
+    private socketService:SocketService) { 
       this.crearFormNewSong();
+      this.socket=socketService.socket;
       activatedRoute.params.subscribe(params=>{
         this.albumId=params['albumId'];
       })
@@ -67,8 +70,8 @@ export class SongAddComponent implements OnInit {
     this.uploadFileService.makeFileUpload(this.fileAudio,this.songService.url,paramsNames,paramsValues)
       .then(response=>{
         this.loading=false;
-        this.router.navigate(['/albums/album',this.albumId]);
-        console.log("Se navego a la nueva pagina nae")
+        //Se emite mensaje para volver a obtener las canciones
+        this.socket.emit('new-song');
       })
       .catch(error=>{
         console.log(error)
