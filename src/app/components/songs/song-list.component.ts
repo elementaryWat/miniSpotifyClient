@@ -11,14 +11,23 @@ import { Song } from '../../models/song';
 export class SongListComponent implements OnInit {
   albumId:string;
   songs:Song[];
+  songSelected:string="";
   constructor(private songService:SongService,
     private activatedRoute:ActivatedRoute) { 
     activatedRoute.params.subscribe(params=>{
       this.albumId=params['albumId'];
       songService.getSongs(this.albumId).subscribe(data=>{
         this.songs=data.songs;
+      },error=>{
+        console.log(error)
       })
     })
+  }
+  mostrarBotonPlay(songId:string){
+    this.songSelected=songId;
+  }
+  ocultarBotonPlay(){
+    this.songSelected="";
   }
 
   ngOnInit() {

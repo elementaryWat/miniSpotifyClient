@@ -1,16 +1,29 @@
-<table class="table">
-  <thead class="thead-dark">
+<table class="table table-dark">
+  <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Duracion</th>
+      <th scope="col" style="width:10%">#</th>
+      <th scope="col" style="width:70%">Nombre</th>
+      <th scope="col" style="width:10%; text-align:center"><i class="fas fa-clock"></i></th>
+      <th scope="col" style="width:10%; text-align:right"><i class="fas fa-ellipsis-v"></i></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let song of songs">
-      <th scope="row">{{song.number}}</th>
+    <tr *ngFor="let song of songs" (mouseover)="mostrarBotonPlay(song._id)" (mouseleave)="ocultarBotonPlay(song._id)">
+      <th scope="row">
+        <span *ngIf="songSelected!=song._id">{{song.number}}</span>
+        <span *ngIf="songSelected==song._id">
+          <button type="button" class="btn btn-outline-light">
+            <i class="fas fa-play"></i>
+          </button>
+        </span>
+      </th>
       <td>{{song.name}} </td>
-      <td>{{song.duration |duration}}</td>
+      <td style="text-align:center">{{song.duration |duration}}</td>
+      <td style="text-align:center">
+        <button type="button" class="btn btn-outline-danger">
+          <i class="fas fa-trash"></i>
+        </button>
+      </td>
     </tr>
 
   </tbody>

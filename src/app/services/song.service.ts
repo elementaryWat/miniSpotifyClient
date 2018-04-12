@@ -7,6 +7,7 @@ import { Song } from '../models/song';
 @Injectable()
 export class SongService {
   url:string;
+  photoUploadRoute:string="/uploadArtistImage/";  
   constructor(private http:Http,
     private userService:UserService) {
     this.url=GLOBAL.url+"/songs";    
