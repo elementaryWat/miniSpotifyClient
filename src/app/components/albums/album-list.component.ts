@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../../services/album.service';
 import { Album } from '../../models/album';
 import { ArtistService } from '../../services/artist.service';
+import { Artist } from '../../models/artist';
 
 @Component({
   selector: 'app-album-list',
@@ -10,10 +11,13 @@ import { ArtistService } from '../../services/artist.service';
   styles: []
 })
 export class AlbumListComponent implements OnInit {
+  @Input() artista:Artist;
   artistId:string;
   albums:Album[]=[];
   urlImageAlbum:string;
   urlImageArtist:string;
+  albumToDelete:Album;
+  
   constructor(private activatedRoute:ActivatedRoute,
     private albumService:AlbumService,
     private artistService:ArtistService) { 
@@ -29,11 +33,16 @@ export class AlbumListComponent implements OnInit {
 
   ngOnInit() {
   }
+
   getUrlImageAlbum(){
     this.urlImageAlbum=this.albumService.url+"/getAlbumImage/";
   }
+
   getUrlImageArtist(){
     this.urlImageArtist=this.artistService.url+"/getArtistImage/";
   }
 
+  selectAlbumToDelete(album:Album){
+    this.albumService.selectAlbumToDelete(album);
+  }
 }

@@ -46,7 +46,7 @@ export class SongEditComponent implements OnInit {
     this.songService.updateDataSong(this.formEditSong.value ,this.currentSong._id)
       .subscribe(data=>{
         this.loading=false;
-        this.songService.socket.emit('song-list-updated');
+        this.songService.socket.emit('songs-list-updated');
         this.updateSongExitoso=true;
       },error=>{
         this.loading=false;        

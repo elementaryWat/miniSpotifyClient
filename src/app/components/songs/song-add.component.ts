@@ -71,7 +71,7 @@ export class SongAddComponent implements OnInit {
       .then(response=>{
         this.loading=false;
         //Se emite mensaje para volver a obtener las canciones
-        this.socket.emit('song-list-updated');
+        this.socket.emit('songs-list-updated');
         this.formNewSong.reset();
         this.fileAudio=null;
       })

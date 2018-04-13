@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { SongService } from '../../services/song.service';
 import { ActivatedRoute } from '@angular/router';
 import { Song } from '../../models/song';
@@ -10,9 +10,10 @@ import { SocketService } from '../../services/socket.service';
   styles: []
 })
 export class SongListComponent implements OnInit {
+  @Input() album;
   albumId:string;
   songs:Song[]=[];
-  songSelected:string="";
+  songHoverSelected:string="";
   socket:any;
   constructor(private songService:SongService,
     private activatedRoute:ActivatedRoute,
@@ -30,10 +31,10 @@ export class SongListComponent implements OnInit {
     })
   }
   mostrarBotonPlay(songId:string){
-    this.songSelected=songId;
+    this.songHoverSelected=songId;
   }
   ocultarBotonPlay(){
-    this.songSelected="";
+    this.songHoverSelected="";
   }
 
   ngOnInit() {

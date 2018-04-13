@@ -15,12 +15,14 @@ export class SongService {
   socket: any;
   photoUploadRoute: string = "/uploadArtistImage/";
   songToEdit: BehaviorSubject<string>;
+  songToDelete: BehaviorSubject<Song>;
   constructor(private http: Http,
     private userService: UserService,
     private socketService: SocketService) {
     this.url = GLOBAL.url + "/songs";
     this.socket = socketService.socket;
     this.songToEdit=new BehaviorSubject("");
+    this.songToDelete=new BehaviorSubject(null);
   }
 
   getSongs(albumId: string) {
@@ -65,6 +67,9 @@ export class SongService {
   }
   selectSongToEdit(songId: string) {
     this.songToEdit.next(songId);
+  }
+  selectSongToDelete(song: Song) {
+    this.songToDelete.next(song);
   }
 
   getSong(songId) {

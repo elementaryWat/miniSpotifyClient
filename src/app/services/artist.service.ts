@@ -4,14 +4,17 @@ import { GLOBAL } from '../GLOBAL';
 import { UserService } from './user.service';
 import { Artist } from '../models/artist';
 import { reject } from 'q';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class ArtistService {
   url: string;
   photoUploadRoute:string="/uploadArtistImage/";
+  artistToDelete:BehaviorSubject<Artist>;  
   constructor(private http: Http,
     private userService: UserService) {
     this.url = GLOBAL.url + "/artists";
+    this.artistToDelete=new BehaviorSubject(null);    
   }
   addArtist(artist: Artist) {
     var body = JSON.stringify(artist);
@@ -67,6 +70,9 @@ export class ArtistService {
       .map(res => {
         return res.json()
       })
+  }
+  selectArtistToDelete(artist:Artist){
+    this.artistToDelete.next(artist);
   }
   deleteArtist(artistId: string) {
     var headers = new Headers({

@@ -38,7 +38,9 @@ import { SongAddComponent } from './components/songs/song-add.component';
 import { DurationPipe } from './pipes/duration.pipe';
 import { SocketService } from './services/socket.service';
 import { SongEditComponent } from './components/songs/song-edit.component';
-import { DeleteModalComponent } from './components/delete-modal/delete-modal.component';
+import { AlbumDeleteComponent } from './components/albums/album-delete.component';
+import { ArtistDeleteComponent } from './components/artists/artist-delete.component';
+import { SongDeleteComponent } from './components/songs/song-delete.component';
 
 
 @NgModule({
@@ -66,7 +68,9 @@ import { DeleteModalComponent } from './components/delete-modal/delete-modal.com
     SongAddComponent,
     DurationPipe,
     SongEditComponent,
-    DeleteModalComponent
+    AlbumDeleteComponent,
+    ArtistDeleteComponent,
+    SongDeleteComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArtistService } from '../../services/artist.service';
 import { Artist } from '../../models/artist';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-artist-list',
@@ -16,7 +17,9 @@ export class ArtistListComponent implements OnInit {
   artistToDelete:Artist;
   constructor(private artistService:ArtistService,
     private router:Router,
-    private activatedRoute:ActivatedRoute) { 
+    private activatedRoute:ActivatedRoute,
+    private socketService:SocketService) { 
+      
   }
 
   ngOnInit() {
@@ -41,11 +44,6 @@ export class ArtistListComponent implements OnInit {
   }
 
   selectArtistToDelete(artist:Artist){
-    this.artistToDelete=artist;
-  }
-  eliminarArtista(){
-    this.artistService.deleteArtist(this.artistToDelete._id).subscribe(data=>{
-      console.log(data);
-    })
+    this.artistService.selectArtistToDelete(artist);
   }
 }

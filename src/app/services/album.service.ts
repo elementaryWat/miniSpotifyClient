@@ -3,14 +3,17 @@ import { Http, Headers } from '@angular/http';
 import { GLOBAL } from '../GLOBAL';
 import { UserService } from './user.service';
 import { Album } from '../models/album';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AlbumService {
   url:string;
   photoUploadRoute:string="/uploadAlbumImage/";
+  albumToDelete:BehaviorSubject<Album>;
   constructor(private http:Http,
     private userService:UserService) { 
     this.url=GLOBAL.url+"/albums";
+    this.albumToDelete=new BehaviorSubject(null);
   }
 
   getAlbums(artistId?:string){
@@ -52,6 +55,10 @@ export class AlbumService {
       .map(res=>{
         return res.json();
       })
+  }
+
+  selectAlbumToDelete(album:Album){
+    this.albumToDelete.next(album);
   }
 
 }
