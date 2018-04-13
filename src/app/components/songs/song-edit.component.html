@@ -1,0 +1,40 @@
+<div class="modal fade" id="editSongModal" tabindex="-1" role="dialog" aria-labelledby="songEditLabel" aria-hidden="true"
+  *ngIf="currentSong">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="songEditLabel">Cambiar nombre de cancion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="form-group" [formGroup]="formEditSong" (ngSubmit)="editSong()">
+        <div class="modal-body">
+          <div class="alert alert-success" role="alert" *ngIf="updateSongExitoso">
+            Se ha cambiado el nombre de manera correcta
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="hayErrorUpdate">
+            {{errorUpdate}}
+          </div>
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" [ngClass]="{'is-valid': formEditSong.controls['name'].valid && formEditSong.controls['name'].touched
+                            , 'is-invalid':formEditSong.controls['name'].invalid && formEditSong.controls['name'].touched}"
+              class="form-control" formControlName="name" id="name">
+            <div class="invalid-feedback" *ngIf="formEditSong.controls['name'].errors?.required">
+              Debe ingresar el nombre de la canción
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-outline-primary" [disabled]="formEditSong.invalid">
+            <span *ngIf="!loading">Cambiar nombre</span>
+            <span *ngIf="loading">
+              <i class="fas fa-circle-notch fa-spin"></i> Cambiando nombre..</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

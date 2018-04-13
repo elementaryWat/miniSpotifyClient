@@ -37,6 +37,8 @@ import { SongListComponent } from './components/songs/song-list.component';
 import { SongAddComponent } from './components/songs/song-add.component';
 import { DurationPipe } from './pipes/duration.pipe';
 import { SocketService } from './services/socket.service';
+import { SongEditComponent } from './components/songs/song-edit.component';
+import { DeleteModalComponent } from './components/delete-modal/delete-modal.component';
 
 
 @NgModule({
@@ -62,7 +64,9 @@ import { SocketService } from './services/socket.service';
     SongsComponent,
     SongListComponent,
     SongAddComponent,
-    DurationPipe
+    DurationPipe,
+    SongEditComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,17 @@
-<table class="table table-dark">
+<div class="alert alert-primary" role="alert" *ngIf="songs.length==0">
+    No hay canciones en este album
+</div>
+<table class="table table-dark" *ngIf="songs.length>0">
   <thead>
     <tr>
       <th scope="col" style="width:10%">#</th>
-      <th scope="col" style="width:70%">Nombre</th>
-      <th scope="col" style="width:10%; text-align:center"><i class="fas fa-clock"></i></th>
-      <th scope="col" style="width:10%; text-align:right"><i class="fas fa-ellipsis-v"></i></th>
+      <th scope="col" style="width:65%">Nombre</th>
+      <th scope="col" style="width:10%; text-align:center">
+        <i class="fas fa-clock"></i>
+      </th>
+      <th scope="col" style="width:15%; text-align:right">
+        <i class="fas fa-ellipsis-v"></i>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -20,6 +27,9 @@
       <td>{{song.name}} </td>
       <td style="text-align:center">{{song.duration |duration}}</td>
       <td style="text-align:center">
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#editSongModal" (click)="songService.selectSongToEdit(song._id)">
+          <i class="fas fa-pencil-alt"></i>
+        </button>
         <button type="button" class="btn btn-outline-danger">
           <i class="fas fa-trash"></i>
         </button>
@@ -28,3 +38,4 @@
 
   </tbody>
 </table>
+<app-song-edit></app-song-edit>

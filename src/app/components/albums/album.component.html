@@ -4,7 +4,8 @@
   </div>
   <div class="col-md-9">
     <h2>{{currentAlbum.title}} </h2>
-    <p>{{currentAlbum.year}} </p>
+    <h5>De: <a [routerLink]="[ '/artists/artist', currentAlbum.artist._id ]">{{currentAlbum.artist.name}}</a> </h5>
+    <p>{{currentAlbum.year}} - {{cantSongs}} canciones </p>
     <app-song-add></app-song-add>
   </div>
 </div>

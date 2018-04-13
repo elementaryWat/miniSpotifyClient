@@ -11,7 +11,7 @@ import { SocketService } from '../../services/socket.service';
 })
 export class SongListComponent implements OnInit {
   albumId:string;
-  songs:Song[];
+  songs:Song[]=[];
   songSelected:string="";
   socket:any;
   constructor(private songService:SongService,
@@ -19,11 +19,11 @@ export class SongListComponent implements OnInit {
     private socketService:SocketService) { 
       this.socket=socketService.socket;
       //Para empezar a recibir las canciones 
-      this.socket.emit('new-song');      
+      this.socket.emit('initial-list-songs');      
     activatedRoute.params.subscribe(params=>{
       this.albumId=params['albumId'];
       songService.getSongs(this.albumId).subscribe(data=>{
-        this.songs=data.songs;
+        this.songs=(data.songs.length>0)?data.songs:[];
       },error=>{
         console.log(error)
       })
