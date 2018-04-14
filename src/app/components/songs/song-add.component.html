@@ -12,7 +12,7 @@
       <form class="form-group" [formGroup]="formNewSong" (ngSubmit)="addSong()">
         <div class="modal-body">
           <div class="form-group">
-            <label for="fileImage">Subir nueva imagen</label>
+            <label for="fileImage">Subir nueva canción</label>
             <input type="file" class="form-control-file" accept="audio/*" id="fileAudio" name="fileAudio" (change)="seleccionarFile($event)">
           </div>
           <div>
@@ -36,7 +36,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-outline-primary" [disabled]="formNewSong.invalid || !hayAudio">
+          <button type="submit" class="btn btn-outline-success" [disabled]="formNewSong.invalid || !hayAudio">
             <span *ngIf="!loading">Agregar canción</span>
             <span *ngIf="loading"><i class="fas fa-circle-notch fa-spin"></i> Agregando cancion..</span>
           </button>

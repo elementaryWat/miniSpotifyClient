@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlbumService } from '../../services/album.service';
 import { Album } from '../../models/album';
 import { ArtistService } from '../../services/artist.service';
 import { Artist } from '../../models/artist';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-album-list',
@@ -17,17 +18,41 @@ export class AlbumListComponent implements OnInit {
   urlImageAlbum:string;
   urlImageArtist:string;
   albumToDelete:Album;
-  
-  constructor(private activatedRoute:ActivatedRoute,
+  paginaActual:number=1;
+  numeroPaginas:number;
+  subscriptionAlbums:Subscription;  
+  constructor(private router:Router,
+    private activatedRoute:ActivatedRoute,
     private albumService:AlbumService,
     private artistService:ArtistService) { 
     this.getUrlImageAlbum();
     activatedRoute.params.subscribe(params=>{
       this.artistId=params['artistId'];
-      this.getUrlImageArtist();
-      albumService.getAlbums(this.artistId).subscribe(data=>{
-        this.albums=data.albums;
-      });
+      if (this.subscriptionAlbums){
+        this.subscriptionAlbums.unsubscribe();
+      }    
+      if (this.artistId){
+        this.subscriptionAlbums= this.albumService.getAlbums(null,this.artistId).subscribe(data=>{  
+          this.albums=data.albums;
+        });
+      }else{
+        if(params['numPage']!=undefined)
+        {
+          this.paginaActual=parseInt(params['numPage']);
+        }
+        this.getUrlImageArtist();
+        if(this.paginaActual<1){
+          this.router.navigate(['/albums/page',1]);
+        }else{
+          this.subscriptionAlbums= this.albumService.getAlbums(this.paginaActual,null).subscribe(data=>{
+            this.albums=data.albums;
+            this.numeroPaginas=data.pages;
+            if(this.paginaActual>this.numeroPaginas){
+              this.router.navigate(['/albums/page',this.numeroPaginas]);
+            }
+          });
+        }
+      }
     })
   }
 
@@ -44,5 +69,9 @@ export class AlbumListComponent implements OnInit {
 
   selectAlbumToDelete(album:Album){
     this.albumService.selectAlbumToDelete(album);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionAlbums.unsubscribe();
   }
 }

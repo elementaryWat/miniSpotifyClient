@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UploadService } from '../../services/upload.service';
 import { AlbumService } from '../../services/album.service';
 import { Album } from '../../models/album';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-album-edit',
@@ -22,11 +23,13 @@ export class AlbumEditComponent implements OnInit {
   currentAlbum:Album;
   urlImage:string;
   initialValue:string;
-
+  socket:any;
   constructor(private activatedRoute:ActivatedRoute,
     private fileUploadService:UploadService,
-    private albumService:AlbumService) { 
+    private albumService:AlbumService,
+    private socketService:SocketService) { 
     this.crearFormUpdateAlbum();
+    this.socket=socketService.socket;
     activatedRoute.params.subscribe(params=>{
       this.albumId=params['albumId'];
       albumService.getAlbum(this.albumId).subscribe(data=>{
@@ -62,6 +65,7 @@ export class AlbumEditComponent implements OnInit {
           this.imageAlbum=null;          
           this.hayImagen=false;          
           this.getUrlImage();
+          this.socket.emit('albums-list-updated');
         })
         .catch(error=>{
           console.log(error);
@@ -75,6 +79,7 @@ export class AlbumEditComponent implements OnInit {
           this.updateAlbumExitoso=true;
           this.initialValue=this.formUpdateAlbum.value;
           this.cambioForm=false;
+          this.socket.emit('albums-list-updated');          
         },error=>{
           console.log(error);
           this.hayErrorUpdate=true;

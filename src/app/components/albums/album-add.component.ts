@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Album } from '../../models/album';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlbumService } from '../../services/album.service';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-album-add',
@@ -15,10 +16,13 @@ export class AlbumAddComponent implements OnInit {
   hayErrorCreate:boolean=false;
   errorCreate:string;
   albumToAdd:Album;
+  socket:any;
   constructor(private router:Router,
     private activatedRoute:ActivatedRoute,
-    private albumService:AlbumService) {
+    private albumService:AlbumService,
+    private socketService:SocketService) {
     this.crearFormNewAlbum();
+    this.socket=socketService.socket;
     this.albumToAdd=new Album('','',2000,'default.png','');
     activatedRoute.params.subscribe(params=>{
       this.artistId=params['artistId'];
@@ -45,6 +49,7 @@ export class AlbumAddComponent implements OnInit {
     this.albumToAdd.artist=this.artistId;
     this.albumService.addAlbum(this.albumToAdd).subscribe(data=>{
       this.router.navigate(['/artists/artist/',this.artistId]);
+      this.socket.emit('albums-list-updated');
     },error=>{
       console.log(error);
       this.hayErrorCreate=true;

@@ -39,4 +39,42 @@
         </div>
       </div>
 </div>
+<nav aria-label="Page navigation" *ngIf="numeroPaginas &&  numeroPaginas>1">
+    <ul class="pagination justify-content-end">
+        <li class="page-item" [ngClass]="{'disabled': paginaActual==1}">
+            <a class="page-link" [routerLink]="['/albums/page',1]">Primero</a>
+        </li>
+        <li class="page-item" [ngClass]="{'disabled': (paginaActual-1)<=0}">
+            <a class="page-link" [routerLink]="['/albums/page',paginaActual-1]" aria-label="Anterior">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Anterior</span>
+            </a>
+        </li>
+
+        <li class="page-item" *ngIf="((paginaActual-2)>0)&&((paginaActual+1)>numeroPaginas)">
+            <a class="page-link" [routerLink]="['/albums/page',paginaActual-2]">{{paginaActual-2}}</a>
+        </li>
+        <li class="page-item" *ngIf="(paginaActual-1)>0">
+            <a class="page-link" [routerLink]="['/albums/page',paginaActual-1]">{{paginaActual-1}}</a>
+        </li>
+        <li class="page-item active">
+            <span class="page-link">{{paginaActual}}</span>
+        </li>
+        <li class="page-item" *ngIf="(paginaActual+1)<=numeroPaginas">
+            <a class="page-link" [routerLink]="['/albums/page',paginaActual+1]">{{paginaActual+1}}</a>
+        </li>
+        <li class="page-item" *ngIf="((paginaActual+2)<=numeroPaginas)&&((paginaActual-1)<=0)">
+            <a class="page-link" [routerLink]="['/albums/page',paginaActual+2]">{{paginaActual+2}}</a>
+        </li>
+        <li class="page-item" [ngClass]="{'disabled': (paginaActual+1)>numeroPaginas}">
+            <a class="page-link" [routerLink]="['/albums/page',paginaActual+1]"aria-label="Siguiente">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Siguiente</span>
+            </a>
+        </li>
+        <li class="page-item" [ngClass]="{'disabled': paginaActual==numeroPaginas}">
+            <a class="page-link" [routerLink]="['/albums/page',numeroPaginas]">Ultimo</a>
+        </li>
+    </ul>
+</nav>
 <app-album-delete [artista]="artista" *ngIf="artistId"></app-album-delete>
