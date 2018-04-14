@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SongService } from '../../services/song.service';
 import { Song } from '../../models/song';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-song-delete',
@@ -10,7 +11,10 @@ import { Song } from '../../models/song';
 export class SongDeleteComponent implements OnInit {
   @Input() album;
   songToDelete:Song;
-  constructor(private songService:SongService) { 
+  socket:any;
+  constructor(private songService:SongService,
+    private socketService:SocketService) { 
+    this.socket=socketService.socket;
     songService.songToDelete.subscribe(song=>{
       this.songToDelete=song;
     })
@@ -20,7 +24,12 @@ export class SongDeleteComponent implements OnInit {
   }
   
   deleteSong(){
-    console.log("Se eliminara la cancion")
+    this.songService.deleteSong(this.songToDelete._id)
+      .subscribe(data=>{
+        this.socket.emit('songs-list-updated');
+      },error=>{
+        console.log(error);
+      })
   }
 
 }

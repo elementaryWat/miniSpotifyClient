@@ -93,4 +93,12 @@ export class SongService {
       })
   }
 
+  deleteSong(songId:string){
+    let headers = new Headers({ 'Authorization': this.userService.currentToken });
+    return this.http.delete(this.url + "/" + songId, { headers })
+      .map(res => {
+        return res.json();
+      })
+  }
+
 }
