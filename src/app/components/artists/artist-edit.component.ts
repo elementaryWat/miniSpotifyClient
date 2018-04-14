@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Artist } from '../../models/artist';
 import { UploadService } from '../../services/upload.service';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-artist-edit',
@@ -22,15 +23,18 @@ export class ArtistEditComponent implements OnInit {
   updateArtistExitoso: boolean = false;
   hayErrorUpdate: boolean = false;
   errorUpdate: string;
+  socket:any;
   constructor(private artistService: ArtistService,
     private fileUploadService:UploadService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private socketService:SocketService) {
     this.crearFormUpdateArtist();
     activatedRoute.params.subscribe(params => {
       this.artistId = params['artistId'];
       artistService.getArtist(this.artistId).subscribe(data => {
         this.currentArtist=data.artist;
         this.getUrlImage();
+        this.socket=socketService.socket;
         this.formUpdateArtist.patchValue(this.currentArtist);
         this.initialValue = this.formUpdateArtist.value;
         this.formUpdateArtist.valueChanges.subscribe(currentValue => {
@@ -60,6 +64,7 @@ export class ArtistEditComponent implements OnInit {
           this.imageArtist=null;          
           this.hayImagen=false;
           this.getUrlImage();
+          this.socket.emit('artists-list-updated');
         })
         .catch(error=>{
           console.log(error);
@@ -73,6 +78,7 @@ export class ArtistEditComponent implements OnInit {
           this.updateArtistExitoso=true;
           this.initialValue=this.formUpdateArtist.value;
           this.cambioForm=false;
+          this.socket.emit('artists-list-updated');          
         },error=>{
           console.log(error);
           this.hayErrorUpdate=true;

@@ -4,9 +4,8 @@ import { GLOBAL } from '../GLOBAL';
 import { UserService } from './user.service';
 import { Song } from '../models/song';
 import { Observable } from "rxjs/Observable";
-import { SocketService } from './socket.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
+import * as io from 'socket.io-client';
 
 
 @Injectable()
@@ -17,15 +16,14 @@ export class SongService {
   songToEdit: BehaviorSubject<string>;
   songToDelete: BehaviorSubject<Song>;
   constructor(private http: Http,
-    private userService: UserService,
-    private socketService: SocketService) {
+    private userService: UserService) {
     this.url = GLOBAL.url + "/songs";
-    this.socket = socketService.socket;
     this.songToEdit=new BehaviorSubject("");
     this.songToDelete=new BehaviorSubject(null);
   }
 
   getSongs(albumId: string) {
+    this.socket.emit('initial-list-songs');
     let observable = new Observable<any>(observer => {
       this.socket.on('songs', () => {
         let headers = new Headers({ 'Authorization': this.userService.currentToken });
@@ -36,12 +34,17 @@ export class SongService {
             observer.next(data);
           })
       })
+      return () => {
+        this.socket.disconnect();
+      };  
     })
     return observable;
   }
   getCountSongs(albumId: string) {
+    this.socket = io(GLOBAL.socketUrl);                        
     let observable = new Observable<any>(observer => {
       this.socket.on('songs', () => {
+        
         let headers = new Headers({ 'Authorization': this.userService.currentToken });
         this.http.get(this.url + "/contSongsAlbum/" + albumId, { headers })
           .map(res => {

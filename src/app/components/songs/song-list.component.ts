@@ -2,7 +2,7 @@ import { Component, OnInit,Input } from '@angular/core';
 import { SongService } from '../../services/song.service';
 import { ActivatedRoute } from '@angular/router';
 import { Song } from '../../models/song';
-import { SocketService } from '../../services/socket.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-song-list',
@@ -15,15 +15,13 @@ export class SongListComponent implements OnInit {
   songs:Song[]=[];
   songHoverSelected:string="";
   socket:any;
+  subscriptionSongs:Subscription;
   constructor(private songService:SongService,
-    private activatedRoute:ActivatedRoute,
-    private socketService:SocketService) { 
-      this.socket=socketService.socket;
-      //Para empezar a recibir las canciones 
-      this.socket.emit('initial-list-songs');      
-    activatedRoute.params.subscribe(params=>{
+    private activatedRoute:ActivatedRoute) {
+      //Para empezar a recibir las canciones      
+      activatedRoute.params.subscribe(params=>{
       this.albumId=params['albumId'];
-      songService.getSongs(this.albumId).subscribe(data=>{
+      this.subscriptionSongs= songService.getSongs(this.albumId).subscribe(data=>{
         this.songs=(data.songs.length>0)?data.songs:[];
       },error=>{
         console.log(error)
@@ -40,4 +38,7 @@ export class SongListComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy(): void {
+    this.subscriptionSongs.unsubscribe();
+  }
 }

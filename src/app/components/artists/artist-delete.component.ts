@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArtistService } from '../../services/artist.service';
 import { Artist } from '../../models/artist';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-artist-delete',
@@ -9,7 +10,10 @@ import { Artist } from '../../models/artist';
 })
 export class ArtistDeleteComponent implements OnInit {
   artistToDelete:Artist;
-  constructor(private artistService:ArtistService) { 
+  socket:any;
+  constructor(private artistService:ArtistService,
+    private socketService:SocketService) { 
+    this.socket=socketService.socket;
     this.artistService.artistToDelete.subscribe(artist=>{
       this.artistToDelete=artist;
     })
@@ -18,10 +22,9 @@ export class ArtistDeleteComponent implements OnInit {
   ngOnInit() {
   }
   eliminarArtista(){
-    console.log(this.artistToDelete)
-    /* this.artistService.deleteArtist(this.artistToDelete._id).subscribe(data=>{
-      console.log(data);
-    }) */
+    this.artistService.deleteArtist(this.artistToDelete._id).subscribe(data=>{
+      this.socket.emit('artists-list-updated');
+    })
   }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ArtistService } from '../../services/artist.service';
 import { Router } from '@angular/router';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-artist-add',
@@ -12,9 +13,12 @@ export class ArtistAddComponent implements OnInit {
   formNewArtist:FormGroup;
   hayErrorCreate:boolean=false;
   errorCreate:string;
+  socket:any;
   constructor(private artistService:ArtistService,
-    private router:Router) { 
+    private router:Router,
+    private socketService:SocketService) { 
     this.crearFormNewArtist();
+    this.socket=socketService.socket;
   }
 
   ngOnInit() {
@@ -35,6 +39,7 @@ export class ArtistAddComponent implements OnInit {
       .subscribe(data=>{
         console.log(data);
         this.router.navigate(['/artists']);
+        this.socket.emit('artists-list-updated');
       },error=>{
         console.log(error);
         this.hayErrorCreate=true;
