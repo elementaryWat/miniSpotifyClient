@@ -4,6 +4,8 @@ import { AlbumService } from '../../services/album.service';
 import { ActivatedRoute } from '@angular/router';
 import { SongService } from '../../services/song.service';
 import { UserService } from '../../services/user.service';
+import { Song } from '../../models/song';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-album',
@@ -15,14 +17,25 @@ export class AlbumComponent implements OnInit {
   albumId:string;
   urlImage:string;
   cantSongs:number;
+  songsAlbum:Song[]=[];
+  songsSubscription:Subscription;
+  songsCountSubscription:Subscription;
+  duration:number;
   constructor(private userService:UserService,
     private albumService:AlbumService,
     private songService:SongService,
     private activatedRoute:ActivatedRoute) { 
       activatedRoute.params.subscribe(params=>{
         this.albumId=params['albumId'];
-        songService.getCountSongs(this.albumId).subscribe(data=>{
+        this.songsCountSubscription= songService.getCountSongs(this.albumId).subscribe(data=>{
           this.cantSongs=data.count;
+        })
+        this.songsSubscription= songService.getSongs(this.albumId).subscribe(data=>{
+          this.songsAlbum=data.songs;
+          this.duration=0;
+          for(let song of this.songsAlbum){
+            this.duration+=song.duration;
+          }
         })
         albumService.getAlbum(this.albumId).subscribe(data=>{
           this.currentAlbum=data.album;
@@ -36,6 +49,10 @@ export class AlbumComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+  ngOnDestroy(): void {
+    this.songsCountSubscription.unsubscribe();
+    this.songsSubscription.unsubscribe();
   }
 
 }

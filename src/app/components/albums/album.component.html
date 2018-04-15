@@ -5,7 +5,7 @@
   <div class="col-md-9">
     <h2>{{currentAlbum.title}} </h2>
     <h5>De: <a [routerLink]="[ '/artists/artist', currentAlbum.artist._id ]">{{currentAlbum.artist.name}}</a> </h5>
-    <p>{{currentAlbum.year}} - {{cantSongs}} canciones </p>
+    <p>{{currentAlbum.year}} <span *ngIf="cantSongs>0">- {{cantSongs}} canciones - {{duration |duration:true}}</span> </p>
     <app-song-add *ngIf="userService.currentUser.role=='ADMIN'"></app-song-add>
   </div>
 </div>
