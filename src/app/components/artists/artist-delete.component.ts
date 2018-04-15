@@ -24,6 +24,7 @@ export class ArtistDeleteComponent implements OnInit {
   eliminarArtista(){
     this.artistService.deleteArtist(this.artistToDelete._id).subscribe(data=>{
       this.socket.emit('artists-list-updated');
+      this.socket.emit('albums-list-updated');      
     })
   }
 

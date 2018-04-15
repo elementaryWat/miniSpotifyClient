@@ -1,6 +1,6 @@
 <div class="container">
     <h2>Todos los artistas
-        <button type="button" class="btn btn-outline-success" [routerLink]="[ '/artists/new-artist' ]">
+        <button type="button" class="btn btn-outline-success" [routerLink]="[ '/artists/new-artist' ]" *ngIf="userService.currentUser.role=='ADMIN'">
             <i class="fas fa-plus"></i>
         </button>
     </h2>
@@ -9,7 +9,7 @@
             <img  class="card-img" width="100px" [src]="urlImage+artist.image" alt="Card image">
             <div class="card-img-overlay">
                 <h5 class="card-title"><a style="color:white" [routerLink]="[ '/artists/artist',artist._id ]">{{artist.name}}</a></h5>
-                <div class="card-footer">
+                <div class="card-footer" *ngIf="userService.currentUser.role=='ADMIN'">
                     <button type="button" class="btn btn-outline-primary" [routerLink]="[ '/artists/edit',artist._id ]">
                         <i class="fas fa-pencil-alt"></i>
                     </button>
@@ -59,4 +59,4 @@
         </ul>
     </nav>
 </div>
-<app-artist-delete></app-artist-delete>
+<app-artist-delete *ngIf="userService.currentUser.role=='ADMIN'"></app-artist-delete>

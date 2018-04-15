@@ -3,6 +3,7 @@ import { ArtistService } from '../../services/artist.service';
 import { Artist } from '../../models/artist';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-artist-list',
@@ -16,7 +17,8 @@ export class ArtistListComponent implements OnInit {
   numeroPaginas:number;
   artistToDelete:Artist;
   subscriptionArtists:Subscription;
-  constructor(private artistService:ArtistService,
+  constructor(private userService:UserService,
+    private artistService:ArtistService,
     private router:Router,
     private activatedRoute:ActivatedRoute) {
       this.activatedRoute.params.subscribe(params=>{     

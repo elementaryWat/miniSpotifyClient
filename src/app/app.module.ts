@@ -41,6 +41,7 @@ import { SongEditComponent } from './components/songs/song-edit.component';
 import { AlbumDeleteComponent } from './components/albums/album-delete.component';
 import { ArtistDeleteComponent } from './components/artists/artist-delete.component';
 import { SongDeleteComponent } from './components/songs/song-delete.component';
+import { CanActivateGuard } from './services/auth-guar.service';
 
 
 @NgModule({
@@ -79,7 +80,7 @@ import { SongDeleteComponent } from './components/songs/song-delete.component';
     HttpModule,
     ROUTES
   ],
-  providers: [UserService,ArtistService,AlbumService,SongService,UploadService,SocketService],
+  providers: [UserService,ArtistService,AlbumService,SongService,UploadService,SocketService,CanActivateGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
