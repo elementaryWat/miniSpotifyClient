@@ -3,6 +3,7 @@ import { SongService } from '../../services/song.service';
 import { ActivatedRoute } from '@angular/router';
 import { Song } from '../../models/song';
 import { Subscription } from 'rxjs/Subscription';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-song-list',
@@ -16,7 +17,8 @@ export class SongListComponent implements OnInit {
   songHoverSelected:string="";
   socket:any;
   subscriptionSongs:Subscription;
-  constructor(private songService:SongService,
+  constructor(private userService:UserService,
+    private songService:SongService,
     private activatedRoute:ActivatedRoute) {
       //Para empezar a recibir las canciones      
       activatedRoute.params.subscribe(params=>{

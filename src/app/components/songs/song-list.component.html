@@ -9,24 +9,24 @@
       <th scope="col" style="width:10%; text-align:center">
         <i class="fas fa-clock"></i>
       </th>
-      <th scope="col" style="width:15%; text-align:right">
+      <th scope="col" style="width:15%; text-align:right" *ngIf="userService.currentUser.role=='ADMIN'">
         <i class="fas fa-ellipsis-v"></i>
       </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let song of songs" (mouseover)="mostrarBotonPlay(song._id)" (mouseleave)="ocultarBotonPlay(song._id)">
+    <tr style="height:55px" *ngFor="let song of songs" (mouseover)="mostrarBotonPlay(song._id)" (mouseleave)="ocultarBotonPlay(song._id)">
       <th scope="row">
-        <span *ngIf="songSelected!=song._id">{{song.number}}</span>
-        <span *ngIf="songSelected==song._id">
-          <button type="button" class="btn btn-outline-light">
+        <span *ngIf="songHoverSelected!=song._id">{{song.number}}</span>
+        <span *ngIf="songHoverSelected==song._id">
+          <button type="button" class="btn btn-outline-light btn-sm">
             <i class="fas fa-play"></i>
           </button>
         </span>
       </th>
       <td>{{song.name}} </td>
       <td style="text-align:center">{{song.duration |duration}}</td>
-      <td style="text-align:center">
+      <td style="text-align:center" *ngIf="userService.currentUser.role=='ADMIN'">
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#editSongModal" (click)="songService.selectSongToEdit(song._id)">
           <i class="fas fa-pencil-alt"></i>
         </button>

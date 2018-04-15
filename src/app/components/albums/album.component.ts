@@ -3,6 +3,7 @@ import { Album } from '../../models/album';
 import { AlbumService } from '../../services/album.service';
 import { ActivatedRoute } from '@angular/router';
 import { SongService } from '../../services/song.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-album',
@@ -14,7 +15,8 @@ export class AlbumComponent implements OnInit {
   albumId:string;
   urlImage:string;
   cantSongs:number;
-  constructor(private albumService:AlbumService,
+  constructor(private userService:UserService,
+    private albumService:AlbumService,
     private songService:SongService,
     private activatedRoute:ActivatedRoute) { 
       activatedRoute.params.subscribe(params=>{

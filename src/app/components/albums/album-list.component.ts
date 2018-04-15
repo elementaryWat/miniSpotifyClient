@@ -5,6 +5,7 @@ import { Album } from '../../models/album';
 import { ArtistService } from '../../services/artist.service';
 import { Artist } from '../../models/artist';
 import { Subscription } from 'rxjs/Subscription';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-album-list',
@@ -23,6 +24,7 @@ export class AlbumListComponent implements OnInit {
   subscriptionAlbums:Subscription;  
   constructor(private router:Router,
     private activatedRoute:ActivatedRoute,
+    private userService:UserService,
     private albumService:AlbumService,
     private artistService:ArtistService) { 
     this.getUrlImageAlbum();

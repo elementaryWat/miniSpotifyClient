@@ -1,6 +1,6 @@
 <div class="container">
     <h2 *ngIf="artistId">Albumes
-        <button type="button" class="btn btn-outline-success" [routerLink]="[ '/albums/new-album/artist' ,artistId]">
+        <button type="button" class="btn btn-outline-success" [routerLink]="[ '/albums/new-album/artist' ,artistId]" *ngIf="userService.currentUser.role=='ADMIN'">
             <i class="fas fa-plus"></i>
         </button>
     </h2>
@@ -18,7 +18,7 @@
           <div class="card-body text-dark album-image">
             <img class="card-img" width="100px" [src]="urlImageAlbum+album.image" alt="Card image">
           </div>
-          <div class="card-footer bg-transparent border-light  ">
+          <div class="card-footer bg-transparent border-light" *ngIf="userService.currentUser.role=='ADMIN' || !artistId">
             <div class="options-album" *ngIf="artistId"> 
               <button type="button" class="btn btn-outline-primary" [routerLink]="[ '/albums/edit',album._id ]">
                 <i class="fas fa-pencil-alt"></i>
@@ -77,4 +77,4 @@
         </li>
     </ul>
 </nav>
-<app-album-delete [artista]="artista" *ngIf="artistId"></app-album-delete>
+<app-album-delete [artista]="artista" *ngIf="artistId && userService.currentUser.role=='ADMIN'"></app-album-delete>

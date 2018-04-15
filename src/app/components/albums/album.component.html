@@ -6,7 +6,7 @@
     <h2>{{currentAlbum.title}} </h2>
     <h5>De: <a [routerLink]="[ '/artists/artist', currentAlbum.artist._id ]">{{currentAlbum.artist.name}}</a> </h5>
     <p>{{currentAlbum.year}} - {{cantSongs}} canciones </p>
-    <app-song-add></app-song-add>
+    <app-song-add *ngIf="userService.currentUser.role=='ADMIN'"></app-song-add>
   </div>
 </div>
 <app-song-list [album]="currentAlbum" *ngIf="currentAlbum"></app-song-list>
