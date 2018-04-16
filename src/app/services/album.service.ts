@@ -13,10 +13,12 @@ export class AlbumService {
   socket:any;
   photoUploadRoute: string = "/uploadAlbumImage/";
   albumToDelete: BehaviorSubject<Album>;
+  queryString: BehaviorSubject<string>;
   constructor(private http: Http,
     private userService: UserService) {
     this.url = GLOBAL.url + "/albums";
     this.albumToDelete = new BehaviorSubject(null);
+    this.queryString = new BehaviorSubject("");
   }
 
   getAlbums(page: number, artistId: string) {
@@ -38,6 +40,37 @@ export class AlbumService {
       };
     })
     return observable;
+  }
+  getAlbumsForSearch() {
+    this.socket = io(GLOBAL.socketUrl);                            
+    this.socket.emit('initial-list-albums');
+    let observable = new Observable<any>(observer => {
+      this.socket.on('albums', () => {
+        let headers = new Headers({ 'Authorization': this.userService.currentToken });
+        return this.http.get(this.url+"/albumsForSearch", { headers })
+          .map(res => {
+            return res.json();
+          }).subscribe(data => {
+            observer.next(data);
+          })
+      })
+      return () => {
+        this.socket.disconnect();
+      };
+    })
+    return observable;
+  }
+
+  searchAlbums(albums:Album[],query:string){
+    let resBusqueda:Album[]=[];
+    let queryString=query.toLowerCase();
+    for(let album of albums){
+      let title=album.title.toLowerCase();
+      if(title.indexOf(queryString)>=0){
+        resBusqueda.push(album);
+      }
+    }
+    return resBusqueda;
   }
 
   getUrlImage() {

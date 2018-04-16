@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ArtistService } from '../../services/artist.service';
+import { AlbumService } from '../../services/album.service';
 
 @Component({
   selector: 'app-search',
@@ -10,7 +11,8 @@ import { ArtistService } from '../../services/artist.service';
 export class SearchComponent implements OnInit {
   formSearch:FormGroup;
   emptyQuery:boolean=true;  
-  constructor(private artistService:ArtistService) { 
+  constructor(private artistService:ArtistService,
+    private albumService:AlbumService) { 
     this.crearFormSearch();
   }
   
@@ -25,6 +27,7 @@ export class SearchComponent implements OnInit {
       if(query!=""){
         this.emptyQuery=false;
         this.artistService.queryString.next(query);        
+        this.albumService.queryString.next(query);        
       }else{
         this.emptyQuery=true;
       }

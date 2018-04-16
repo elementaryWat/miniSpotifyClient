@@ -5,9 +5,10 @@
         </button>
     </h2>
     <h2 *ngIf="!artistId">Todos los albumes</h2>
+    <hr>
     <div class="alert alert-primary" role="alert" *ngIf="albums.length==0">
       <span *ngIf="artistId">Este artista aun no tiene ningun album</span>
-      <span *ngIf="!artistId">No hay albumes aún</span>
+      <span *ngIf="!artistId">No se encontraron albumes <span *ngIf="forSearch">con "{{queryString}}"</span> </span>
   </div>
     <div class="card-columns" *ngIf="albums.length>0">
         <div class="card border-dark album-card  mb-3" style="max-width: 18rem;" *ngFor="let album of albums">

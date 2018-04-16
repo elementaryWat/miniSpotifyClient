@@ -9,5 +9,6 @@
 </nav>
 <div class="container main-container">
   <app-artist-list [forSearch]=true *ngIf="!emptyQuery"></app-artist-list>
+  <app-album-list [forSearch]=true *ngIf="!emptyQuery"></app-album-list>
   <h5 *ngIf="emptyQuery">Ingrese un texto de busqueda</h5>
 </div>

@@ -6,6 +6,7 @@ import { ArtistService } from '../../services/artist.service';
 import { Artist } from '../../models/artist';
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from '../../services/user.service';
+import {where} from 'underscore';
 
 @Component({
   selector: 'app-album-list',
@@ -13,63 +14,78 @@ import { UserService } from '../../services/user.service';
   styles: []
 })
 export class AlbumListComponent implements OnInit {
-  @Input() artista:Artist;
-  artistId:string;
-  albums:Album[]=[];
-  urlImageAlbum:string;
-  urlImageArtist:string;
-  albumToDelete:Album;
-  paginaActual:number=1;
-  numeroPaginas:number;
-  subscriptionAlbums:Subscription;  
-  constructor(private router:Router,
-    private activatedRoute:ActivatedRoute,
-    private userService:UserService,
-    private albumService:AlbumService,
-    private artistService:ArtistService) { 
+  @Input() artista: Artist;
+  @Input() forSearch: boolean;
+  artistId: string;
+  albumsOriginal: Album[] = [];
+  albums: Album[] = [];
+  urlImageAlbum: string;
+  urlImageArtist: string;
+  albumToDelete: Album;
+  paginaActual: number = 1;
+  numeroPaginas: number;
+  queryString:string;
+  subscriptionAlbums: Subscription;
+  constructor(private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService,
+    private albumService: AlbumService,
+    private artistService: ArtistService) {
     this.getUrlImageAlbum();
-    activatedRoute.params.subscribe(params=>{
-      this.artistId=params['artistId'];
-      if (this.subscriptionAlbums){
-        this.subscriptionAlbums.unsubscribe();
-      }    
-      if (this.artistId){
-        this.subscriptionAlbums= this.albumService.getAlbums(null,this.artistId).subscribe(data=>{  
-          this.albums=data.albums;
-        });
-      }else{
-        if(params['numPage']!=undefined)
-        {
-          this.paginaActual=parseInt(params['numPage']);
-        }
-        this.getUrlImageArtist();
-        if(this.paginaActual<1){
-          this.router.navigate(['/albums/page',1]);
-        }else{
-          this.subscriptionAlbums= this.albumService.getAlbums(this.paginaActual,null).subscribe(data=>{
-            this.albums=data.albums;
-            this.numeroPaginas=data.pages;
-            if(this.paginaActual>this.numeroPaginas){
-              this.router.navigate(['/albums/page',this.numeroPaginas]);
-            }
-          });
-        }
-      }
+    this.getUrlImageArtist();
+    albumService.queryString.subscribe(query=>{
+      this.queryString=query;
     })
   }
 
   ngOnInit() {
+    if (this.forSearch) {
+      this.subscriptionAlbums = this.albumService.getAlbumsForSearch().subscribe(data => {
+        this.albumsOriginal = data.albums;
+        this.albumService.queryString.subscribe(query => {
+          this.albums=this.albumService.searchAlbums(this.albumsOriginal,query);
+        })
+      });
+    } else {
+      this.activatedRoute.params.subscribe(params => {
+        this.artistId = params['artistId'];
+        if (this.subscriptionAlbums) {
+          this.subscriptionAlbums.unsubscribe();
+        }
+        if (this.artistId) {
+          this.subscriptionAlbums = this.albumService.getAlbums(null, this.artistId).subscribe(data => {
+            this.albums = data.albums;
+          });
+        } else {
+          if (params['numPage'] != undefined) {
+            this.paginaActual = parseInt(params['numPage']);
+          }
+          this.getUrlImageArtist();
+          if (this.paginaActual < 1) {
+            this.router.navigate(['/albums/page', 1]);
+          } else {
+            this.subscriptionAlbums = this.albumService.getAlbums(this.paginaActual, null).subscribe(data => {
+              this.albums = data.albums;
+              this.numeroPaginas = data.pages;
+              if (this.paginaActual > this.numeroPaginas) {
+                this.router.navigate(['/albums/page', this.numeroPaginas]);
+              }
+            });
+          }
+        }
+      })
+    }
   }
 
-  getUrlImageAlbum(){
-    this.urlImageAlbum=this.albumService.url+"/getAlbumImage/";
+  getUrlImageAlbum() {
+    this.urlImageAlbum = this.albumService.url + "/getAlbumImage/";
   }
 
-  getUrlImageArtist(){
-    this.urlImageArtist=this.artistService.url+"/getArtistImage/";
+  getUrlImageArtist() {
+    this.urlImageArtist = this.artistService.url + "/getArtistImage/";
   }
 
-  selectAlbumToDelete(album:Album){
+  selectAlbumToDelete(album: Album) {
     this.albumService.selectAlbumToDelete(album);
   }
 

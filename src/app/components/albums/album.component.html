@@ -9,4 +9,6 @@
     <app-song-add *ngIf="userService.currentUser.role=='ADMIN'"></app-song-add>
   </div>
 </div>
-<app-song-list [album]="currentAlbum" *ngIf="currentAlbum"></app-song-list>
+<div style="margin-right: 20px">
+  <app-song-list [album]="currentAlbum" *ngIf="currentAlbum"></app-song-list>  
+</div>

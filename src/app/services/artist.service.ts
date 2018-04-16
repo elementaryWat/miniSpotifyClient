@@ -71,14 +71,14 @@ export class ArtistService {
         return res.json()
       })
   }
-  searchArtists(query:string){
+  getArtistsForSearch(){
     this.socket = io(GLOBAL.socketUrl);                
     this.socket.emit('initial-list-artists');
     this.observableArtists = new Observable<any>(observer => {            
       this.socket.on('artists', () => {              
         var headers = new Headers({'Authorization': this.userService.currentToken
         });
-        this.http.get(this.url + "/search/" + query, { headers })
+        this.http.get(this.url + "/artistsForSearch", { headers })
           .map(res => {
             return res.json();
           })
@@ -92,6 +92,18 @@ export class ArtistService {
     })
     return this.observableArtists;
   }
+  searchArtists(artists:Artist[],query:string){
+    let resBusqueda:Artist[]=[];
+    let queryString=query.toLowerCase();
+    for(let artist of artists){
+      let name=artist.name.toLowerCase();
+      if(name.indexOf(queryString)>=0){
+        resBusqueda.push(artist);
+      }
+    }
+    return resBusqueda;
+  }
+
   existArtist(artistName: string) {
     var body = JSON.stringify({ artistName });
     var headers = new Headers({
