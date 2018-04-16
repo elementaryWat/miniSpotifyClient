@@ -1,0 +1,13 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+  <a class="navbar-brand" href="#"></a>
+    <div style="text-align: center">
+      <form class="form-inline my-2 my-lg-0" [formGroup]="formSearch">
+        <input class="form-control mr-sm-2" type="search" formControlName="query"
+         placeholder="Buscar artistas, álbumes y canciones" aria-label="Search" size="40">
+      </form>
+    </div>
+</nav>
+<div class="container main-container">
+  <app-artist-list [forSearch]=true *ngIf="!emptyQuery"></app-artist-list>
+  <h5 *ngIf="emptyQuery">Ingrese un texto de busqueda</h5>
+</div>

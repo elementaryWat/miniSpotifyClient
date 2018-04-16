@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ArtistService } from '../../services/artist.service';
 import { Artist } from '../../models/artist';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { UserService } from '../../services/user.service';
   styles: []
 })
 export class ArtistListComponent implements OnInit {
+  @Input() forSearch:boolean;
   artists:Artist[]=[];
   urlImage:string;
   paginaActual:number=1;
@@ -21,7 +22,21 @@ export class ArtistListComponent implements OnInit {
     private artistService:ArtistService,
     private router:Router,
     private activatedRoute:ActivatedRoute) {
-      this.activatedRoute.params.subscribe(params=>{     
+  }
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(params=>{     
+      if(this.forSearch){
+        this.artistService.queryString.subscribe(query=>{
+          if(this.subscriptionArtists){
+            this.subscriptionArtists.unsubscribe();
+          }
+          this.subscriptionArtists= this.artistService.searchArtists(query).subscribe(data=>{
+            this.artists=data.artists;
+            this.urlImage=this.artistService.getUrlImage();
+          });
+        })
+      }else{
         if (this.subscriptionArtists){
           this.subscriptionArtists.unsubscribe();
         }    
@@ -42,10 +57,8 @@ export class ArtistListComponent implements OnInit {
             }
           });
         }
-      })
-  }
-
-  ngOnInit() {
+      }
+    })
   }
   
   ngOnDestroy() {

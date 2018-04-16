@@ -9,9 +9,11 @@ import { ARTIST_ROUTES } from './components/artists/artists.routes';
 import { ArtistsComponent } from './components/artists/artists.component';
 import { AlbumsComponent } from './components/albums/albums.component';
 import { ALBUM_ROUTES } from './components/albums/albums.routes';
+import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
+    { path: 'search', component: SearchComponent },
     { path: 'login', component: LoginComponent },
     { path: 'albums', component: AlbumsComponent,children:ALBUM_ROUTES },
     { path: 'artists', component: ArtistsComponent,children:ARTIST_ROUTES },

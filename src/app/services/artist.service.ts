@@ -15,12 +15,14 @@ export class ArtistService {
   url: string;
   photoUploadRoute: string = "/uploadArtistImage/";
   artistToDelete: BehaviorSubject<Artist>;
+  queryString: BehaviorSubject<string>;
   socket:any;
   observableArtists:Observable<any>;
   constructor(private http: Http,
     private userService: UserService) {
     this.url = GLOBAL.url + "/artists";
     this.artistToDelete = new BehaviorSubject(null);
+    this.queryString = new BehaviorSubject("");
     this.observableArtists=new Observable<any>();
   }
   addArtist(artist: Artist) {
@@ -58,7 +60,6 @@ export class ArtistService {
       };  
     })
     return this.observableArtists;
-
   }
   getUrlImage() {
     return this.url + "/getArtistImage/";
@@ -69,6 +70,27 @@ export class ArtistService {
       .map(res => {
         return res.json()
       })
+  }
+  searchArtists(query:string){
+    this.socket = io(GLOBAL.socketUrl);                
+    this.socket.emit('initial-list-artists');
+    this.observableArtists = new Observable<any>(observer => {            
+      this.socket.on('artists', () => {              
+        var headers = new Headers({'Authorization': this.userService.currentToken
+        });
+        this.http.get(this.url + "/search/" + query, { headers })
+          .map(res => {
+            return res.json();
+          })
+          .subscribe(data=>{
+            observer.next(data);
+          });
+      })
+      return () => {
+        this.socket.disconnect();
+      };  
+    })
+    return this.observableArtists;
   }
   existArtist(artistName: string) {
     var body = JSON.stringify({ artistName });
