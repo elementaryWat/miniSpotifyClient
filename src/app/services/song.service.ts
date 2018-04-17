@@ -17,6 +17,8 @@ export class SongService {
   songToDelete: BehaviorSubject<Song>;
   queryString: BehaviorSubject<string>;
   cantResults: BehaviorSubject<number>;
+  songPlaying:BehaviorSubject<Song>;
+  playingAny:boolean=false;
   constructor(private http: Http,
     private userService: UserService) {
     this.url = GLOBAL.url + "/songs";
@@ -24,6 +26,7 @@ export class SongService {
     this.songToDelete=new BehaviorSubject(null);
     this.queryString = new BehaviorSubject("");    
     this.cantResults = new BehaviorSubject(0);    
+    this.songPlaying = new BehaviorSubject(null);   
   }
 
   getSongs(albumId: string) {
@@ -137,6 +140,13 @@ export class SongService {
       .map(res => {
         return res.json();
       })
+  }
+
+  playSong(song:Song){
+    this.songPlaying.next(song);
+  }
+  getUrlSong(){
+    return this.url+"/getAudioFile/";
   }
 
 }

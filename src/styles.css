@@ -8,7 +8,9 @@ html, body{
 }
 .main-container{
     margin-top: 20px;
-    margin-bottom: 100px
+}
+.playingSong{
+ padding-bottom: 200px
 }
 .btn-form{
     text-align: center;
@@ -59,6 +61,7 @@ html, body{
 }
 .navigation{
     position: fixed;
+    z-index: 1;
     width: 15%;
     text-align: center;
     color: white;

@@ -21,6 +21,7 @@ export class AlbumComponent implements OnInit {
   songsSubscription:Subscription;
   songsCountSubscription:Subscription;
   duration:number;
+  playingSong:boolean=false;
   constructor(private userService:UserService,
     private albumService:AlbumService,
     private songService:SongService,
@@ -41,6 +42,11 @@ export class AlbumComponent implements OnInit {
           this.currentAlbum=data.album;
           this.getUrlImage();
         })
+      })
+      songService.songPlaying.subscribe(song=>{
+        if(song){
+          this.playingSong=true;
+        }
       })
   }
 

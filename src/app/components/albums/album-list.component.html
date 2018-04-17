@@ -1,4 +1,4 @@
-<div class="container main-container">
+<div class="container main-container" >
     <h2 *ngIf="artistId && !forSearch">Albumes
         <button type="button" class="btn btn-outline-success" [routerLink]="[ '/albums/new-album/artist' ,artistId]" *ngIf="userService.currentUser.role=='ADMIN'">
             <i class="fas fa-plus"></i>

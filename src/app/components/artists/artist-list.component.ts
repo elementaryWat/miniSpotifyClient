@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from '../../services/user.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { SongService } from '../../services/song.service';
 
 @Component({
   selector: 'app-artist-list',

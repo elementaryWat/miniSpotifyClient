@@ -1,3 +1,15 @@
-<div class="player"><p>
-  <img src="..." alt="..." class="img-thumbnail"> player works!
-</p></div>
+<div class="player">
+  <div class="row">
+    <div class="col-md-2">
+      <img [src]="urlImageAlbum" alt="Image Album" class="img-thumbnail"> 
+    </div>
+    <div class="col-md-10">
+      <h5 style="color: white">{{currentSong.name}} </h5>
+      <p style="color: white">{{currentSong.album.artist.name}} </p>
+      <audio controls id="player" #player>
+        <source id="mp3-source" [src]="urlAudioSong" type="audio/mpeg">
+        Tu navegador no soporta HTML5
+      </audio>
+    </div>
+  </div>
+</div>

@@ -24,7 +24,7 @@
       <th scope="row">
         <span *ngIf="songHoverSelected!=song._id &&!forSearch">{{song.number}}</span>
         <span *ngIf="songHoverSelected==song._id">
-          <button type="button" class="btn btn-outline-light btn-sm">
+          <button type="button" class="btn btn-outline-light btn-sm" (click)="songService.playSong(song)">
             <i class="fas fa-play"></i>
           </button>
         </span>

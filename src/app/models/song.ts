@@ -4,7 +4,7 @@ export class Song{
         public name:string,
         public duration:number,
         public file:string,
-        public Album:string,
+        public album:string,
         public _id?:string        
     ){}
 }

@@ -7,6 +7,8 @@ import { Artist } from '../../models/artist';
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from '../../services/user.service';
 import {where} from 'underscore';
+import { SongService } from '../../services/song.service';
+import { Song } from '../../models/song';
 
 @Component({
   selector: 'app-album-list',
