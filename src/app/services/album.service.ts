@@ -14,11 +14,13 @@ export class AlbumService {
   photoUploadRoute: string = "/uploadAlbumImage/";
   albumToDelete: BehaviorSubject<Album>;
   queryString: BehaviorSubject<string>;
+  cantResults: BehaviorSubject<number>;
   constructor(private http: Http,
     private userService: UserService) {
     this.url = GLOBAL.url + "/albums";
     this.albumToDelete = new BehaviorSubject(null);
     this.queryString = new BehaviorSubject("");
+    this.cantResults = new BehaviorSubject(0);
   }
 
   getAlbums(page: number, artistId: string) {
@@ -70,6 +72,7 @@ export class AlbumService {
         resBusqueda.push(album);
       }
     }
+    this.cantResults.next(resBusqueda.length);
     return resBusqueda;
   }
 

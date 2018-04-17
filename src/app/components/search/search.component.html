@@ -8,7 +8,8 @@
     </div>
 </nav>
 <div class="container main-container">
-  <app-artist-list [forSearch]=true *ngIf="!emptyQuery"></app-artist-list>
-  <app-album-list [forSearch]=true *ngIf="!emptyQuery"></app-album-list>
+  <app-artist-list [forSearch]=true *ngIf="!emptyQuery" [ngClass]="{'hide': cantResultsArtists==0}"></app-artist-list>
+  <app-album-list [forSearch]=true *ngIf="!emptyQuery" [ngClass]="{'hide': cantResultsAlbums==0}"></app-album-list>
+  <app-song-list [forSearch]=true *ngIf="!emptyQuery" [ngClass]="{'hide': cantResultsSongs==0}"></app-song-list>
   <h5 *ngIf="emptyQuery">Ingrese un texto de busqueda</h5>
 </div>

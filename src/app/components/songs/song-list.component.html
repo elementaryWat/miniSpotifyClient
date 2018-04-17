@@ -1,11 +1,15 @@
+<h4 *ngIf="forSearch">Canciones</h4>
 <div class="alert alert-primary" role="alert" *ngIf="songs.length==0">
-    No hay canciones en este album
+    <span *ngIf="album">No hay canciones en este album</span>
+    <span *ngIf="!album && forSearch">No se encontraron canciones con "{{queryString}}"</span>
 </div>
 <table class="table table-dark" *ngIf="songs.length>0">
   <thead>
     <tr>
-      <th scope="col" style="width:10%">#</th>
-      <th scope="col" style="width:65%">Nombre</th>
+      <th scope="col" style="width:10%"><span *ngIf="!forSearch">#</span></th>
+      <th scope="col" [ngClass]="{'nombreForSearch': forSearch, 'nombre': !forSearch}">Nombre</th>
+      <th scope="col" style="width:15%" *ngIf="forSearch">Artista</th>
+      <th scope="col" style="width:15%" *ngIf="forSearch">Album</th>
       <th scope="col" style="width:10%; text-align:center">
         <i class="fas fa-clock"></i>
       </th>
@@ -17,7 +21,7 @@
   <tbody>
     <tr style="height:55px" *ngFor="let song of songs" (mouseover)="mostrarBotonPlay(song._id)" (mouseleave)="ocultarBotonPlay(song._id)">
       <th scope="row">
-        <span *ngIf="songHoverSelected!=song._id">{{song.number}}</span>
+        <span *ngIf="songHoverSelected!=song._id &&!forSearch">{{song.number}}</span>
         <span *ngIf="songHoverSelected==song._id">
           <button type="button" class="btn btn-outline-light btn-sm">
             <i class="fas fa-play"></i>
@@ -25,6 +29,8 @@
         </span>
       </th>
       <td>{{song.name}} </td>
+      <td *ngIf="forSearch"><a [routerLink]="[ '/artists/artist', song.album.artist._id ]">{{song.album.artist.name}}</a> </td>      
+      <td *ngIf="forSearch"><a [routerLink]="[ '/albums/album', song.album._id ]">{{song.album.title}}</a></td>
       <td style="text-align:center">{{song.duration |duration}}</td>
       <td style="text-align:center" *ngIf="userService.currentUser.role=='ADMIN'">
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#editSongModal" (click)="songService.selectSongToEdit(song._id)">

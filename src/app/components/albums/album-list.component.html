@@ -1,10 +1,11 @@
 <div class="container">
-    <h2 *ngIf="artistId">Albumes
+    <h2 *ngIf="artistId && !forSearch">Albumes
         <button type="button" class="btn btn-outline-success" [routerLink]="[ '/albums/new-album/artist' ,artistId]" *ngIf="userService.currentUser.role=='ADMIN'">
             <i class="fas fa-plus"></i>
         </button>
     </h2>
-    <h2 *ngIf="!artistId">Todos los albumes</h2>
+    <h2 *ngIf="!artistId && !forSearch">Todos los albumes</h2>
+    <h4 *ngIf="forSearch">Albumes</h4>
     <hr>
     <div class="alert alert-primary" role="alert" *ngIf="albums.length==0">
       <span *ngIf="artistId">Este artista aun no tiene ningun album</span>

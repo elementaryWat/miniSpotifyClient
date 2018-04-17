@@ -15,11 +15,15 @@ export class SongService {
   photoUploadRoute: string = "/uploadArtistImage/";
   songToEdit: BehaviorSubject<string>;
   songToDelete: BehaviorSubject<Song>;
+  queryString: BehaviorSubject<string>;
+  cantResults: BehaviorSubject<number>;
   constructor(private http: Http,
     private userService: UserService) {
     this.url = GLOBAL.url + "/songs";
     this.songToEdit=new BehaviorSubject("");
     this.songToDelete=new BehaviorSubject(null);
+    this.queryString = new BehaviorSubject("");    
+    this.cantResults = new BehaviorSubject(0);    
   }
 
   getSongs(albumId: string) {
@@ -40,6 +44,26 @@ export class SongService {
     })
     return observable;
   }
+  getSongsForSearch() {
+    this.socket = io(GLOBAL.socketUrl);                            
+    this.socket.emit('initial-list-songs');
+    let observable = new Observable<any>(observer => {
+      this.socket.on('songs', () => {
+        let headers = new Headers({ 'Authorization': this.userService.currentToken });
+        return this.http.get(this.url+"/songsForSearch", { headers })
+          .map(res => {
+            return res.json();
+          }).subscribe(data => {
+            observer.next(data);
+          })
+      })
+      return () => {
+        this.socket.disconnect();
+      };
+    })
+    return observable;
+  }
+
   getCountSongs(albumId: string) {
     this.socket = io(GLOBAL.socketUrl);                        
     let observable = new Observable<any>(observer => {
@@ -55,6 +79,20 @@ export class SongService {
       })
     })
     return observable;
+  }
+
+  searchSongs(songs:Song[],query:string){
+    let resBusqueda:Song[]=[];
+    let queryString=query.toLowerCase();
+    for(let song of songs){
+      let name=song.name.toLowerCase();
+      if(name.indexOf(queryString)>=0){
+        resBusqueda.push(song);
+      }
+    }
+    this.cantResults.next(resBusqueda.length);
+    
+    return resBusqueda;
   }
 
   addSong(song: Song) {

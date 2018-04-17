@@ -16,6 +16,7 @@ export class ArtistService {
   photoUploadRoute: string = "/uploadArtistImage/";
   artistToDelete: BehaviorSubject<Artist>;
   queryString: BehaviorSubject<string>;
+  cantResults: BehaviorSubject<number>;
   socket:any;
   observableArtists:Observable<any>;
   constructor(private http: Http,
@@ -23,6 +24,7 @@ export class ArtistService {
     this.url = GLOBAL.url + "/artists";
     this.artistToDelete = new BehaviorSubject(null);
     this.queryString = new BehaviorSubject("");
+    this.cantResults = new BehaviorSubject(0);
     this.observableArtists=new Observable<any>();
   }
   addArtist(artist: Artist) {
@@ -101,6 +103,7 @@ export class ArtistService {
         resBusqueda.push(artist);
       }
     }
+    this.cantResults.next(resBusqueda.length);
     return resBusqueda;
   }
 
