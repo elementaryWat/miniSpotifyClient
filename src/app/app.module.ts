@@ -43,6 +43,7 @@ import { ArtistDeleteComponent } from './components/artists/artist-delete.compon
 import { SongDeleteComponent } from './components/songs/song-delete.component';
 import { CanActivateGuard } from './services/auth-guar.service';
 import { SearchComponent } from './components/search/search.component';
+import { PlayerComponent } from './components/player/player.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { SearchComponent } from './components/search/search.component';
     AlbumDeleteComponent,
     ArtistDeleteComponent,
     SongDeleteComponent,
-    SearchComponent
+    SearchComponent,
+    PlayerComponent
   ],
   imports: [
     BrowserModule,

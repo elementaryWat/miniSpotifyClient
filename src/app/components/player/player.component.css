@@ -1,0 +1,9 @@
+.player{
+    background: #343a40;
+    width: 85%;
+    position: fixed;
+    bottom: 0;
+    padding: 20px;
+    margin-left: -30px;
+    border-left: 1px solid #444;
+}

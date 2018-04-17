@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container main-container">
     <h4 *ngIf="forSearch">Artistas</h4>
     <h2 *ngIf="!forSearch">Todos los artistas
         <button type="button" class="btn btn-outline-success" [routerLink]="[ '/artists/new-artist' ]" *ngIf="userService.currentUser.role=='ADMIN'">
@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <nav aria-label="Page navigation" *ngIf="numeroPaginas &&  numeroPaginas>1">
+    <nav aria-label="Page navigation" *ngIf="numeroPaginas &&  numeroPaginas>=1">
         <ul class="pagination justify-content-end">
             <li class="page-item" [ngClass]="{'disabled': paginaActual==1}">
                 <a class="page-link" [routerLink]="['/artists/page',1]">Primero</a>

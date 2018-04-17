@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container main-container">
     <h2 *ngIf="artistId && !forSearch">Albumes
         <button type="button" class="btn btn-outline-success" [routerLink]="[ '/albums/new-album/artist' ,artistId]" *ngIf="userService.currentUser.role=='ADMIN'">
             <i class="fas fa-plus"></i>
@@ -8,75 +8,79 @@
     <h4 *ngIf="forSearch">Albumes</h4>
     <hr>
     <div class="alert alert-primary" role="alert" *ngIf="albums.length==0">
-      <span *ngIf="artistId">Este artista aun no tiene ningun album</span>
-      <span *ngIf="!artistId">No se encontraron albumes <span *ngIf="forSearch">con "{{queryString}}"</span> </span>
-  </div>
+        <span *ngIf="artistId">Este artista aun no tiene ningun album</span>
+        <span *ngIf="!artistId">No se encontraron albumes
+            <span *ngIf="forSearch">con "{{queryString}}"</span>
+        </span>
+    </div>
     <div class="card-columns" *ngIf="albums.length>0">
         <div class="card border-dark album-card  mb-3" style="max-width: 18rem;" *ngFor="let album of albums">
-          <div class="card-header bg-transparent border-light album-header">
-            <h4> <a [routerLink]="[ '/albums/album', album._id ]" style="color:white">{{album.title}}</a></h4>
-            <p>{{album.year}} </p>
-          </div>
-          <div class="card-body text-dark album-image">
-            <img class="card-img" width="100px" [src]="urlImageAlbum+album.image" alt="Card image">
-          </div>
-          <div class="card-footer bg-transparent border-light" *ngIf="userService.currentUser.role=='ADMIN' || !artistId">
-            <div class="options-album" *ngIf="artistId"> 
-              <button type="button" class="btn btn-outline-primary" [routerLink]="[ '/albums/edit',album._id ]">
-                <i class="fas fa-pencil-alt"></i>
-              </button>
-              <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteAlbumModal" (click)="selectAlbumToDelete(album)">
-                <i class="fas fa-trash"></i>
-              </button>
+            <div class="card-header bg-transparent border-light album-header">
+                <h4>
+                    <a [routerLink]="[ '/albums/album', album._id ]" style="color:white">{{album.title}}</a>
+                </h4>
+                <p>{{album.year}} </p>
             </div>
-            <div class="row" *ngIf="!artistId">
-              <div class="col-md-3">
-                  <img class="img-thumbnail artist-image-min rounded-circle" [src]="urlImageArtist+album.artist.image" alt="Artist image">
-              </div>
-              <div class="col-md-9">
-                <a [routerLink]="[ '/artists/artist', album.artist._id ]">{{album.artist.name}}</a>
-              </div>
+            <div class="card-body text-dark album-image">
+                <img class="card-img" width="100px" [src]="urlImageAlbum+album.image" alt="Card image">
             </div>
-          </div>
+            <div class="card-footer bg-transparent border-light" *ngIf="userService.currentUser.role=='ADMIN' || !artistId">
+                <div class="options-album" *ngIf="artistId">
+                    <button type="button" class="btn btn-outline-primary" [routerLink]="[ '/albums/edit',album._id ]">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteAlbumModal" (click)="selectAlbumToDelete(album)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="row" *ngIf="!artistId">
+                    <div class="col-md-3">
+                        <img class="img-thumbnail artist-image-min rounded-circle" [src]="urlImageArtist+album.artist.image" alt="Artist image">
+                    </div>
+                    <div class="col-md-9">
+                        <a [routerLink]="[ '/artists/artist', album.artist._id ]">{{album.artist.name}}</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-</div>
-<nav aria-label="Page navigation" *ngIf="numeroPaginas &&  numeroPaginas>1">
-    <ul class="pagination justify-content-end">
-        <li class="page-item" [ngClass]="{'disabled': paginaActual==1}">
-            <a class="page-link" [routerLink]="['/albums/page',1]">Primero</a>
-        </li>
-        <li class="page-item" [ngClass]="{'disabled': (paginaActual-1)<=0}">
-            <a class="page-link" [routerLink]="['/albums/page',paginaActual-1]" aria-label="Anterior">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Anterior</span>
-            </a>
-        </li>
+    </div>
+    <nav aria-label="Page navigation" *ngIf="numeroPaginas &&  numeroPaginas>=1">
+        <ul class="pagination justify-content-end">
+            <li class="page-item" [ngClass]="{'disabled': paginaActual==1}">
+                <a class="page-link" [routerLink]="['/albums/page',1]">Primero</a>
+            </li>
+            <li class="page-item" [ngClass]="{'disabled': (paginaActual-1)<=0}">
+                <a class="page-link" [routerLink]="['/albums/page',paginaActual-1]" aria-label="Anterior">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+            </li>
 
-        <li class="page-item" *ngIf="((paginaActual-2)>0)&&((paginaActual+1)>numeroPaginas)">
-            <a class="page-link" [routerLink]="['/albums/page',paginaActual-2]">{{paginaActual-2}}</a>
-        </li>
-        <li class="page-item" *ngIf="(paginaActual-1)>0">
-            <a class="page-link" [routerLink]="['/albums/page',paginaActual-1]">{{paginaActual-1}}</a>
-        </li>
-        <li class="page-item active">
-            <span class="page-link">{{paginaActual}}</span>
-        </li>
-        <li class="page-item" *ngIf="(paginaActual+1)<=numeroPaginas">
-            <a class="page-link" [routerLink]="['/albums/page',paginaActual+1]">{{paginaActual+1}}</a>
-        </li>
-        <li class="page-item" *ngIf="((paginaActual+2)<=numeroPaginas)&&((paginaActual-1)<=0)">
-            <a class="page-link" [routerLink]="['/albums/page',paginaActual+2]">{{paginaActual+2}}</a>
-        </li>
-        <li class="page-item" [ngClass]="{'disabled': (paginaActual+1)>numeroPaginas}">
-            <a class="page-link" [routerLink]="['/albums/page',paginaActual+1]"aria-label="Siguiente">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Siguiente</span>
-            </a>
-        </li>
-        <li class="page-item" [ngClass]="{'disabled': paginaActual==numeroPaginas}">
-            <a class="page-link" [routerLink]="['/albums/page',numeroPaginas]">Ultimo</a>
-        </li>
-    </ul>
-</nav>
+            <li class="page-item" *ngIf="((paginaActual-2)>0)&&((paginaActual+1)>numeroPaginas)">
+                <a class="page-link" [routerLink]="['/albums/page',paginaActual-2]">{{paginaActual-2}}</a>
+            </li>
+            <li class="page-item" *ngIf="(paginaActual-1)>0">
+                <a class="page-link" [routerLink]="['/albums/page',paginaActual-1]">{{paginaActual-1}}</a>
+            </li>
+            <li class="page-item active">
+                <span class="page-link">{{paginaActual}}</span>
+            </li>
+            <li class="page-item" *ngIf="(paginaActual+1)<=numeroPaginas">
+                <a class="page-link" [routerLink]="['/albums/page',paginaActual+1]">{{paginaActual+1}}</a>
+            </li>
+            <li class="page-item" *ngIf="((paginaActual+2)<=numeroPaginas)&&((paginaActual-1)<=0)">
+                <a class="page-link" [routerLink]="['/albums/page',paginaActual+2]">{{paginaActual+2}}</a>
+            </li>
+            <li class="page-item" [ngClass]="{'disabled': (paginaActual+1)>numeroPaginas}">
+                <a class="page-link" [routerLink]="['/albums/page',paginaActual+1]" aria-label="Siguiente">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+            </li>
+            <li class="page-item" [ngClass]="{'disabled': paginaActual==numeroPaginas}">
+                <a class="page-link" [routerLink]="['/albums/page',numeroPaginas]">Ultimo</a>
+            </li>
+        </ul>
+    </nav>
+</div>
 <app-album-delete [artista]="artista" *ngIf="artistId && userService.currentUser.role=='ADMIN'"></app-album-delete>

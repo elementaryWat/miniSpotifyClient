@@ -1,4 +1,5 @@
 <h4 *ngIf="forSearch">Canciones</h4>
+<hr *ngIf="forSearch">
 <div class="alert alert-primary" role="alert" *ngIf="songs.length==0">
     <span *ngIf="album">No hay canciones en este album</span>
     <span *ngIf="!album && forSearch">No se encontraron canciones con "{{queryString}}"</span>
