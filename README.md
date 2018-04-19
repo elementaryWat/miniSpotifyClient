@@ -1,5 +1,7 @@
 # MiniSpotifyClient
 
+[Video de la version 1 terminada](https://youtu.be/F--oyEhpUB4)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
 ## Development server
